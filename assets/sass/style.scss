@@ -4,3 +4,78 @@
  * <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css" /> */
 
 @import "compass/reset";
+
+@mixin transform($transforms) {
+	   -moz-transform: $transforms;
+	     -o-transform: $transforms;
+	    -ms-transform: $transforms;
+	-webkit-transform: $transforms;
+          transform: $transforms;
+}
+
+$font: Andale Mono;
+
+#header {
+	height: 175px;
+	width: 100%;
+	position: relative;
+	z-index: 10;
+	pointer-events: none;
+	background: -moz-linear-gradient(top, rgba(255,255,255,1) 0%, rgba(255,255,255,1) 33%, rgba(255,255,255,0.9) 40%, rgba(255,255,255,0) 100%); /* FF3.6+ */
+background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgba(255,255,255,1)), color-stop(33%,rgba(255,255,255,1)), color-stop(40%,rgba(255,255,255,0.9)), color-stop(100%,rgba(255,255,255,0))); /* Chrome,Safari4+ */
+background: -webkit-linear-gradient(top, rgba(255,255,255,1) 0%,rgba(255,255,255,1) 33%,rgba(255,255,255,0.9) 40%,rgba(255,255,255,0) 100%); /* Chrome10+,Safari5.1+ */
+background: -o-linear-gradient(top, rgba(255,255,255,1) 0%,rgba(255,255,255,1) 33%,rgba(255,255,255,0.9) 40%,rgba(255,255,255,0) 100%); /* Opera 11.10+ */
+background: -ms-linear-gradient(top, rgba(255,255,255,1) 0%,rgba(255,255,255,1) 33%,rgba(255,255,255,0.9) 40%,rgba(255,255,255,0) 100%); /* IE10+ */
+background: linear-gradient(to bottom, rgba(255,255,255,1) 0%,rgba(255,255,255,1) 33%,rgba(255,255,255,0.9) 40%,rgba(255,255,255,0) 100%); /* W3C */
+filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', endColorstr='#00ffffff',GradientType=0 ); /* IE6-9 */
+	h1 {
+		margin-top: 25px;
+	}
+	a {
+		position: fixed;
+		top: 50%; left: 50%;
+		@include transform(translate(-50%,-50%));
+		font-family: $font;
+		text-decoration: none;
+		color: black;
+		opacity: .6;
+		cursor: pointer;
+		cursor: hand;
+		display: block;
+	}
+	img {
+	}
+}
+
+.wrapper {
+	position: fixed;
+	top: 0; left: 0%; width: 100%;height: 100%; overflow: hidden;
+	>div {
+		padding: 0% 0% 0% 0%;
+		>div {
+			padding-bottom: 300px;
+			width: 100%;
+			font-family: $font;
+			h1 {
+				font-size: 1.3em;
+				margin-bottom: 10px;
+				font-weight: bold;
+			}
+		}
+		>div:first-child {
+			padding-top: 100%;
+		}
+	}
+	
+	.left {
+		width: 60%;
+		margin-right: 30%;
+		margin-left: 10%;
+	}
+	.right {
+		width: 60%; 
+		margin-left: 30%;
+		margin-right: 10%;
+	}
+
+}
