@@ -13,6 +13,7 @@
 	site = {
 
 		paddingTop: window.innerHeight,
+		emails: $('.wrapper>div>div'),
 
 		init: function(){
 			site.resize();
@@ -43,6 +44,22 @@
 						});
 						logo.children('h1').css('opacity',logoOpacity);
 					}
+
+					$('#timeline').fadeOut();
+				}else{
+					logo.css({
+						'top' 				: '5%',
+					});
+					logo.css({
+						'-webkit-transform' : 'translate(-50%,-50%) scale(.3)',
+						'-moz-transform'    : 'translate(-50%,-50%) scale(.3)',
+						'-ms-transform'     : 'translate(-50%,-50%) scale(.3)',
+						'-o-transform'      : 'translate(-50%,-50%) scale(.3)',
+						'transform'         : 'translate(-50%,-50%) scale(.3)'
+					});
+					logo.children('h1').css('opacity',logoOpacity);
+
+					$('#timeline').fadeIn();
 				}
 			}
 
@@ -57,13 +74,13 @@
 			document.addEventListener('touchmove', function (e) { e.preventDefault(); }, false);
 		},
 		resize: function(){
+			site.paddingTop = window.innerHeight;
 			$('.wrapper>div>div:eq(0)').css('padding-top',site.paddingTop);
+			$('.wrapper>div>div:eq('+(parseInt(site.emails.length)-1)+')').css('padding-bottom',site.paddingTop/2);
 		},
 	};
 
-	/* trigger when page is ready */
 	$(document).ready(function (){
-		// your functions go here
 		site.init();
 	});
 	
@@ -72,6 +89,7 @@
 	});
 	
 	$(window).resize(function() {
+		console.log('fired');
 		site.resize();
 	});
 

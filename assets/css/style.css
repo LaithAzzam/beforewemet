@@ -113,6 +113,28 @@ article, aside, details, figcaption, figure, footer, header, hgroup, main, menu,
 }
 
 /* line 50, ../sass/style.scss */
+#timeline {
+  position: fixed;
+  bottom: 0px;
+  left: 50%;
+  -moz-transform: translate(-50%, 0);
+  -o-transform: translate(-50%, 0);
+  -ms-transform: translate(-50%, 0);
+  -webkit-transform: translate(-50%, 0);
+  transform: translate(-50%, 0);
+  display: none;
+  width: 100%;
+  background-color: black;
+  z-index: 100;
+}
+/* line 59, ../sass/style.scss */
+#timeline input {
+  width: 60%;
+  margin: 0px 20%;
+  padding: 10px 0px;
+}
+
+/* line 66, ../sass/style.scss */
 .wrapper {
   position: fixed;
   top: 0;
@@ -121,33 +143,33 @@ article, aside, details, figcaption, figure, footer, header, hgroup, main, menu,
   height: 100%;
   overflow: hidden;
 }
-/* line 53, ../sass/style.scss */
+/* line 69, ../sass/style.scss */
 .wrapper > div {
   padding: 0% 0% 0% 0%;
 }
-/* line 55, ../sass/style.scss */
+/* line 71, ../sass/style.scss */
 .wrapper > div > div {
   padding-bottom: 300px;
   width: 100%;
   font-family: Andale Mono;
 }
-/* line 59, ../sass/style.scss */
+/* line 75, ../sass/style.scss */
 .wrapper > div > div h1 {
   font-size: 1.3em;
   margin-bottom: 10px;
   font-weight: bold;
 }
-/* line 65, ../sass/style.scss */
+/* line 81, ../sass/style.scss */
 .wrapper > div > div:first-child {
   padding-top: 100%;
 }
-/* line 70, ../sass/style.scss */
+/* line 86, ../sass/style.scss */
 .wrapper .left {
   width: 60%;
   margin-right: 30%;
   margin-left: 10%;
 }
-/* line 75, ../sass/style.scss */
+/* line 91, ../sass/style.scss */
 .wrapper .right {
   width: 60%;
   margin-left: 30%;
