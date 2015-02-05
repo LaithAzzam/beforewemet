@@ -17,7 +17,7 @@
 
 		init: function(){
 			site.resize();
-			site.probe();
+			site.spreadsheet();
 		},
 		probe: function(){
 			var myScroll;
@@ -77,6 +77,35 @@
 			site.paddingTop = window.innerHeight;
 			$('.wrapper>div>div:eq(0)').css('padding-top',site.paddingTop);
 			$('.wrapper>div>div:eq('+(parseInt(site.emails.length)-1)+')').css('padding-bottom',site.paddingTop/2);
+		},
+		spreadsheet: function(){
+
+			  var public_spreadsheet_url = 'https://docs.google.com/spreadsheets/d/1ullH-GuUMvywG410oyDghFYKcVtMrcALGngWaW7b57g/pubhtml';
+
+			  function init() {
+			    Tabletop.init( { key: public_spreadsheet_url,
+			                     callback: showInfo,
+			                     simpleSheet: true } )
+			  }
+
+			  function showInfo(data, tabletop) {
+			    alert("Successfully processed!")
+			    site.buildFeed(data);
+				site.probe();
+			  }
+			  init();
+		},
+		buildFeed: function(data){
+			$.each(data, function( index, value ) {
+				index = JSON.stringify(index);
+				content = 	JSON.stringify(value);
+			  console.log(JSON.stringify(index) +': '+JSON.stringify(value) );
+			  if(index % 2 === 0){
+			  	$('.wrapper>div').append('<div class="left"><h1>'+value.AUTHOR+' // '+value.SUBJECT+'</h1><p>'+value.COPY+'</p></div>');
+			  }else{
+			  	$('.wrapper>div').append('<div class="right"><h1>'+value.AUTHOR+' // '+value.SUBJECT+'</h1><p>'+value.COPY+'</p></div>');
+			  }
+			});
 		},
 	};
 
