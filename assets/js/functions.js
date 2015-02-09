@@ -100,8 +100,6 @@
 				}
 				
 			}
-
-			
 		},
 		resize: function(){
 			site.paddingTop = window.innerHeight;
