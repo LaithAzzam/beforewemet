@@ -14,17 +14,12 @@
 	site = {
 
 		myScroll:'',
-		Dragdealer:'',
 		paddingTop: window.innerHeight,
 		emails: $('.wrapper>div>div'),
 
 		init: function(){
 			site.spreadsheet();
-			$('#timeline').hover(function(){
-				$(this).addClass('hover');
-			},function(){
-				$(this).removeClass('hover');
-			})
+			$( "#slider" ).slider();
 		},
 		probe: function(){
 			$('#logo').attr('src','assets/img/logo.svg')
@@ -33,48 +28,33 @@
 			var position;
 
 			function loaded () {
-				site.myScroll = new IScroll('.wrapper', { probeType: 3, mouseWheel: true, momentum: false });
+				site.myScroll = new IScroll('.wrapper', { probeType: 3, mouseWheel: true });
+
+				$('#slider').on('mousemove',function(){
+					scrollPoint = (($(this).val()/100)*($('.wrapper>div').height()-window.innerHeight));
+					site.myScroll.scrollTo(0, -scrollPoint);
+					updatePosition();
+				})
 
 				site.myScroll.on('scroll', function(){
-					updatePosition();
-					$('#timeline').css('pointerEvents','none');
+					updatePosition(),
+					scrollValue = (-site.myScroll.y/($('.wrapper>div').height()-window.innerHeight))*100;
+					$( "#slider" ).val(scrollValue);
 				});
 				site.myScroll.on('scrollEnd', function(){
-					updatePosition();
-					$('#timeline').css('pointerEvents','inherit');
+					updatePosition(),
+					scrollValue = (-site.myScroll.y/($('.wrapper>div').height()-window.innerHeight))*100;
+					$( "#slider" ).val(scrollValue);
 				});
 			}
 			loaded();
 
 			document.addEventListener('touchmove', function (e) { e.preventDefault(); }, false);
-
-			site.Dragdealer = new Dragdealer('slider', {
-				animationCallback: function(x, y) {
-					scrollPoint = (x*($('.wrapper>div').height()-window.innerHeight));
-					if($('#timeline').hasClass('hover')){
-			    		site.myScroll.scrollTo(0, -scrollPoint);
-			    	}
-			    	if(x ==0 ){
-						$('#header>a').css({
-							'top' 				: '50%',
-						});
-						$('#header>a').css({
-							'-webkit-transform' : 'translate(-50%,-50%) scale(1)',
-							'-moz-transform'    : 'translate(-50%,-50%) scale(1)',
-							'-ms-transform'     : 'translate(-50%,-50%) scale(1)',
-							'-o-transform'      : 'translate(-50%,-50%) scale(1)',
-							'transform'         : 'translate(-50%,-50%) scale(1)'
-						});
-						$('#header>a').children('h1').css('opacity','1');
-			    	}
-			  	}
-			});
-
 			function updatePosition () {
 				scrollDistance = site.paddingTop/2;
 				logoPosition = 50+(site.myScroll.y/scrollDistance)*50;
 				logoScale = 1.2+(site.myScroll.y/scrollDistance);
-				logoOpacity = .8+(site.myScroll.y/scrollDistance);
+				logoOpacity = 1+(site.myScroll.y/scrollDistance);
 
 				logo = $('#header>a');
 				if(logoPosition>=5){
@@ -92,10 +72,10 @@
 						logo.children('h1').css('opacity',logoOpacity);
 					}
 
-					// $('#timeline').css({
-					// 	opacity: 0,
-					// 	pointerEvents: 'none',
-					// });
+					$('#timeline').css({
+						opacity: 0,
+						pointerEvents: 'none',
+					});
 				}else{
 					logo.css({
 						'top' 				: '5%',
@@ -114,16 +94,16 @@
 						pointerEvents: 'inherit',
 					});
 				}
-				scrollValue = (-site.myScroll.y/($('.wrapper>div').height()-window.innerHeight));
-				console.log(scrollValue);
-				site.Dragdealer.setValue(scrollValue, 0);
 			}
-
-			
 		},
 		resize: function(){
 			site.paddingTop = window.innerHeight;
 			$('.wrapper>div>div:eq(0)').css('padding-top',site.paddingTop);
+			paddingBottom = ( window.innerHeight-$('.wrapper>div>div').last().height() )/2;
+			if(paddingBottom <= 50){
+				paddingBottom = 100
+			}
+			$('.wrapper>div>div').last().css('padding-bottom', paddingBottom);
 		},
 		spreadsheet: function(){
 
