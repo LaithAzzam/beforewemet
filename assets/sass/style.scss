@@ -91,8 +91,9 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', end
 				font-weight: bold;
 			}
 		}
-		>div:first-child {
-		}
+		>div:last-child {
+			padding-bottom:0px;
+		}	
 	}
 	
 	.left {

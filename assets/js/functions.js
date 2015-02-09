@@ -106,6 +106,11 @@
 		resize: function(){
 			site.paddingTop = window.innerHeight;
 			$('.wrapper>div>div:eq(0)').css('padding-top',site.paddingTop);
+			paddingBottom = ( window.innerHeight-$('.wrapper>div>div').last().height() )/2;
+			if(paddingBottom <= 50){
+				paddingBottom = 100
+			}
+			$('.wrapper>div>div').last().css('padding-bottom', paddingBottom);
 		},
 		spreadsheet: function(){
 

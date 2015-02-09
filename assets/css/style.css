@@ -171,13 +171,17 @@ article, aside, details, figcaption, figure, footer, header, hgroup, main, menu,
   margin-bottom: 10px;
   font-weight: bold;
 }
-/* line 98, ../sass/style.scss */
+/* line 94, ../sass/style.scss */
+.wrapper > div > div:last-child {
+  padding-bottom: 0px;
+}
+/* line 99, ../sass/style.scss */
 .wrapper .left {
   width: 60%;
   margin-right: 30%;
   margin-left: 10%;
 }
-/* line 103, ../sass/style.scss */
+/* line 104, ../sass/style.scss */
 .wrapper .right {
   width: 60%;
   margin-left: 30%;
