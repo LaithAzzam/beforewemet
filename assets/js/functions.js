@@ -20,6 +20,11 @@
 
 		init: function(){
 			site.spreadsheet();
+			$('#timeline').hover(function(){
+				$(this).addClass('hover');
+			},function(){
+				$(this).removeClass('hover');
+			})
 		},
 		probe: function(){
 			$('#logo').attr('src','assets/img/logo.svg')
@@ -28,10 +33,16 @@
 			var position;
 
 			function loaded () {
-				site.myScroll = new IScroll('.wrapper', { probeType: 3, mouseWheel: true });
+				site.myScroll = new IScroll('.wrapper', { probeType: 3, mouseWheel: true, momentum: false });
 
-				site.myScroll.on('scroll', updatePosition);
-				site.myScroll.on('scrollEnd', updatePosition);
+				site.myScroll.on('scroll', function(){
+					updatePosition();
+					$('#timeline').css('pointerEvents','none');
+				});
+				site.myScroll.on('scrollEnd', function(){
+					updatePosition();
+					$('#timeline').css('pointerEvents','inherit');
+				});
 			}
 			loaded();
 
@@ -40,8 +51,22 @@
 			site.Dragdealer = new Dragdealer('slider', {
 				animationCallback: function(x, y) {
 					scrollPoint = (x*($('.wrapper>div').height()-window.innerHeight));
-					console.log(scrollPoint);
-			    	site.myScroll.scrollTo(0, -scrollPoint);
+					if($('#timeline').hasClass('hover')){
+			    		site.myScroll.scrollTo(0, -scrollPoint);
+			    	}
+			    	if(x ==0 ){
+						$('#header>a').css({
+							'top' 				: '50%',
+						});
+						$('#header>a').css({
+							'-webkit-transform' : 'translate(-50%,-50%) scale(1)',
+							'-moz-transform'    : 'translate(-50%,-50%) scale(1)',
+							'-ms-transform'     : 'translate(-50%,-50%) scale(1)',
+							'-o-transform'      : 'translate(-50%,-50%) scale(1)',
+							'transform'         : 'translate(-50%,-50%) scale(1)'
+						});
+						$('#header>a').children('h1').css('opacity','1');
+			    	}
 			  	}
 			});
 
@@ -89,8 +114,8 @@
 						pointerEvents: 'inherit',
 					});
 				}
-				if($())
-				scrollValue = -site.myScroll.y/($('.wrapper>div').height()-window.innerHeight);
+				scrollValue = (-site.myScroll.y/($('.wrapper>div').height()-window.innerHeight));
+				console.log(scrollValue);
 				site.Dragdealer.setValue(scrollValue, 0);
 			}
 
