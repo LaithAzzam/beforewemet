@@ -14,12 +14,13 @@
 	site = {
 
 		myScroll:'',
-		Dragdealer:'',
+		// Dragdealer:'',
 		paddingTop: window.innerHeight,
 		emails: $('.wrapper>div>div'),
 
 		init: function(){
 			site.spreadsheet();
+			$( "#slider" ).slider();
 		},
 		probe: function(){
 			$('#logo').attr('src','assets/img/logo.svg')
@@ -30,26 +31,34 @@
 			function loaded () {
 				site.myScroll = new IScroll('.wrapper', { probeType: 3, mouseWheel: true });
 
-				site.myScroll.on('scroll', updatePosition);
-				site.myScroll.on('scrollEnd', updatePosition);
+				$('#slider').on('mousemove',function(){
+					scrollPoint = (($(this).val()/100)*($('.wrapper>div').height()-window.innerHeight));
+					site.myScroll.scrollTo(0, -scrollPoint);
+					updatePosition();
+				})
+
+				site.myScroll.on('scroll', function(){
+					updatePosition(),
+					scrollValue = (-site.myScroll.y/($('.wrapper>div').height()-window.innerHeight))*100;
+					$( "#slider" ).val(scrollValue);
+				});
+				site.myScroll.on('scrollEnd', function(){
+					updatePosition(),
+					scrollValue = (-site.myScroll.y/($('.wrapper>div').height()-window.innerHeight))*100;
+					$( "#slider" ).val(scrollValue);
+				});
 			}
 			loaded();
 
 			document.addEventListener('touchmove', function (e) { e.preventDefault(); }, false);
 
-			site.Dragdealer = new Dragdealer('slider', {
-				animationCallback: function(x, y) {
-					scrollPoint = (x*($('.wrapper>div').height()-window.innerHeight));
-					console.log(scrollPoint);
-			    	site.myScroll.scrollTo(0, -scrollPoint);
-			  	}
-			});
+		 
 
 			function updatePosition () {
 				scrollDistance = site.paddingTop/2;
 				logoPosition = 50+(site.myScroll.y/scrollDistance)*50;
 				logoScale = 1.2+(site.myScroll.y/scrollDistance);
-				logoOpacity = .8+(site.myScroll.y/scrollDistance);
+				logoOpacity = 1+(site.myScroll.y/scrollDistance);
 
 				logo = $('#header>a');
 				if(logoPosition>=5){
@@ -67,10 +76,10 @@
 						logo.children('h1').css('opacity',logoOpacity);
 					}
 
-					// $('#timeline').css({
-					// 	opacity: 0,
-					// 	pointerEvents: 'none',
-					// });
+					$('#timeline').css({
+						opacity: 0,
+						pointerEvents: 'none',
+					});
 				}else{
 					logo.css({
 						'top' 				: '5%',
@@ -89,9 +98,7 @@
 						pointerEvents: 'inherit',
 					});
 				}
-				if($())
-				scrollValue = -site.myScroll.y/($('.wrapper>div').height()-window.innerHeight);
-				site.Dragdealer.setValue(scrollValue, 0);
+				
 			}
 
 			
