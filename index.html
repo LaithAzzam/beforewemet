@@ -41,6 +41,8 @@
 	<link rel="shortcut icon" href="favicon.ico" />
 	
 	<!-- concatenate and minify for production -->
+	<link rel="stylesheet" href="assets/css/jquery-ui.css" />
+	<link rel="stylesheet" href="assets/css/dragdealer.css" />
 	<link rel="stylesheet" href="assets/css/style.css" />
 	
 	<!-- Twitter: see https://dev.twitter.com/docs/cards/types/summary-card for details -->
@@ -63,12 +65,14 @@
 
 <div id="header">
 
-	<a href="/"><img src="assets/img/logo.svg" alt="logo"/><h1>before we met</h1></a>
+	<a href="/"><img id="logo" src="assets/img/logo.gif" alt="logo"/><h1>before we met</h1></a>
 
 </div>
 
 <form id="timeline">
-	<input type="range" name="points" min="0" max="10">
+	<div id="slider" class="dragdealer">
+	  <div class="handle red-bar">drag me</div>
+	</div>
 </form>
 	
 <div class="wrapper">
@@ -83,7 +87,8 @@
 <!-- this is where we put our custom functions -->
 <!-- don't forget to concatenate and minify if needed -->
 
-<script src="assets/js/libs/iscroll-probe.js"></script>
+<script src="assets/js/libs/jquery-ui.js"></script>
+<script src="assets/js/libs/dragdealer.js"></script>
 <script src="assets/js/libs/tabletop.js"></script>
 <script src="assets/js/functions.js"></script>
 

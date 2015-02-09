@@ -10,24 +10,46 @@
 // remap jQuery to $
 (function($){
 
+
 	site = {
 
+		myScroll:'',
+		Dragdealer:'',
 		paddingTop: window.innerHeight,
 		emails: $('.wrapper>div>div'),
 
 		init: function(){
-			site.resize();
 			site.spreadsheet();
 		},
 		probe: function(){
-			var myScroll;
+			$('#logo').attr('src','assets/img/logo.svg')
+			$('#header h1').css('opacity','1');
+			site.resize();
 			var position;
+
+			function loaded () {
+				site.myScroll = new IScroll('.wrapper', { probeType: 3, mouseWheel: true });
+
+				site.myScroll.on('scroll', updatePosition);
+				site.myScroll.on('scrollEnd', updatePosition);
+			}
+			loaded();
+
+			document.addEventListener('touchmove', function (e) { e.preventDefault(); }, false);
+
+			site.Dragdealer = new Dragdealer('slider', {
+				animationCallback: function(x, y) {
+					scrollPoint = (x*($('.wrapper>div').height()-window.innerHeight));
+					console.log(scrollPoint);
+			    	site.myScroll.scrollTo(0, -scrollPoint);
+			  	}
+			});
 
 			function updatePosition () {
 				scrollDistance = site.paddingTop/2;
-				logoPosition = 50+(myScroll.y/scrollDistance)*50;
-				logoScale = 1.2+(myScroll.y/scrollDistance);
-				logoOpacity = .8+(myScroll.y/scrollDistance);
+				logoPosition = 50+(site.myScroll.y/scrollDistance)*50;
+				logoScale = 1.2+(site.myScroll.y/scrollDistance);
+				logoOpacity = .8+(site.myScroll.y/scrollDistance);
 
 				logo = $('#header>a');
 				if(logoPosition>=5){
@@ -45,7 +67,10 @@
 						logo.children('h1').css('opacity',logoOpacity);
 					}
 
-					$('#timeline').fadeOut();
+					// $('#timeline').css({
+					// 	opacity: 0,
+					// 	pointerEvents: 'none',
+					// });
 				}else{
 					logo.css({
 						'top' 				: '5%',
@@ -59,24 +84,21 @@
 					});
 					logo.children('h1').css('opacity',logoOpacity);
 
-					$('#timeline').fadeIn();
+					$('#timeline').css({
+						opacity: 1,
+						pointerEvents: 'inherit',
+					});
 				}
+				if($())
+				scrollValue = -site.myScroll.y/($('.wrapper>div').height()-window.innerHeight);
+				site.Dragdealer.setValue(scrollValue, 0);
 			}
 
-			function loaded () {
-				myScroll = new IScroll('.wrapper', { probeType: 3, mouseWheel: true });
-
-				myScroll.on('scroll', updatePosition);
-				myScroll.on('scrollEnd', updatePosition);
-			}
-			loaded();
-
-			document.addEventListener('touchmove', function (e) { e.preventDefault(); }, false);
+			
 		},
 		resize: function(){
 			site.paddingTop = window.innerHeight;
 			$('.wrapper>div>div:eq(0)').css('padding-top',site.paddingTop);
-			$('.wrapper>div>div:eq('+(parseInt(site.emails.length)-1)+')').css('padding-bottom',site.paddingTop/2);
 		},
 		spreadsheet: function(){
 
@@ -85,11 +107,11 @@
 			  function init() {
 			    Tabletop.init( { key: public_spreadsheet_url,
 			                     callback: showInfo,
+			                     debug: true,
 			                     simpleSheet: true } )
 			  }
 
 			  function showInfo(data, tabletop) {
-			    alert("Successfully processed!")
 			    site.buildFeed(data);
 				site.probe();
 			  }
@@ -97,13 +119,14 @@
 		},
 		buildFeed: function(data){
 			$.each(data, function( index, value ) {
+				if(index <= 10){
 				index = JSON.stringify(index);
 				content = 	JSON.stringify(value);
-			  console.log(JSON.stringify(index) +': '+JSON.stringify(value) );
 			  if(index % 2 === 0){
 			  	$('.wrapper>div').append('<div class="left"><h1>'+value.AUTHOR+' // '+value.SUBJECT+'</h1><p>'+value.COPY+'</p></div>');
 			  }else{
 			  	$('.wrapper>div').append('<div class="right"><h1>'+value.AUTHOR+' // '+value.SUBJECT+'</h1><p>'+value.COPY+'</p></div>');
+			  }
 			  }
 			});
 		},
@@ -118,7 +141,6 @@
 	});
 	
 	$(window).resize(function() {
-		console.log('fired');
 		site.resize();
 	});
 
