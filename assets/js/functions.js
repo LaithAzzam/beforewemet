@@ -98,7 +98,6 @@
 						pointerEvents: 'inherit',
 					});
 				}
-				
 			}
 		},
 		resize: function(){
