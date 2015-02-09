@@ -14,7 +14,6 @@
 	site = {
 
 		myScroll:'',
-		// Dragdealer:'',
 		paddingTop: window.innerHeight,
 		emails: $('.wrapper>div>div'),
 
@@ -51,9 +50,6 @@
 			loaded();
 
 			document.addEventListener('touchmove', function (e) { e.preventDefault(); }, false);
-
-		 
-
 			function updatePosition () {
 				scrollDistance = site.paddingTop/2;
 				logoPosition = 50+(site.myScroll.y/scrollDistance)*50;
