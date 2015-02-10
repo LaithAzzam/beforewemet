@@ -14,15 +14,15 @@
 	site = {
 
 		myScroll:'',
-		paddingTop: window.innerHeight,
 		emails: $('.wrapper>div>div'),
+		paddingTop: window.innerHeight+15,
 
 		init: function(){
 			site.spreadsheet();
-			$( "#slider" ).slider();
+			site.miscFunctions();
 		},
 		probe: function(){
-			$('#logo').attr('src','assets/img/logo.svg')
+			$('#logo').attr('src','assets/img/logo.svg');
 			$('#header h1').css('opacity','1');
 			site.resize();
 			var position;
@@ -30,20 +30,21 @@
 			function loaded () {
 				site.myScroll = new IScroll('.wrapper', { probeType: 3, mouseWheel: true });
 
-				$('#slider').on('mousemove',function(){
-					scrollPoint = (($(this).val()/100)*($('.wrapper>div').height()-window.innerHeight));
+				$('#slider').on('mousemove change',function(){
+					scrollPoint = (($(this).val()/10000)*($('.wrapper>div').height()));
 					site.myScroll.scrollTo(0, -scrollPoint);
+					console.log($('#slider').val());
 					updatePosition();
 				})
 
 				site.myScroll.on('scroll', function(){
 					updatePosition(),
-					scrollValue = (-site.myScroll.y/($('.wrapper>div').height()-window.innerHeight))*100;
+					scrollValue = (-site.myScroll.y/($('.wrapper>div').height()))*10000;
 					$( "#slider" ).val(scrollValue);
 				});
 				site.myScroll.on('scrollEnd', function(){
 					updatePosition(),
-					scrollValue = (-site.myScroll.y/($('.wrapper>div').height()-window.innerHeight))*100;
+					scrollValue = (-site.myScroll.y/($('.wrapper>div').height()))*10000;
 					$( "#slider" ).val(scrollValue);
 				});
 			}
@@ -97,9 +98,8 @@
 			}
 		},
 		resize: function(){
-			site.paddingTop = window.innerHeight;
 			$('.wrapper>div>div:eq(0)').css('padding-top',site.paddingTop);
-			paddingBottom = ( window.innerHeight-$('.wrapper>div>div').last().height() )/2;
+			paddingBottom = ( site.paddingTop-$('.wrapper>div>div').last().height() )/2;
 			if(paddingBottom <= 50){
 				paddingBottom = 100
 			}
@@ -124,15 +124,36 @@
 		},
 		buildFeed: function(data){
 			$.each(data, function( index, value ) {
-				if(index <= 10){
+				if(index <= 100){
 				index = JSON.stringify(index);
 				content = 	JSON.stringify(value);
-			  if(index % 2 === 0){
-			  	$('.wrapper>div').append('<div class="left"><h1>'+value.AUTHOR+' // '+value.SUBJECT+'</h1><p>'+value.COPY+'</p></div>');
+			  if(value.AUTHOR.substring(0,3) == 'tal'){
+			  	author = value.AUTHOR.substring(0,3);
+			  	side = 'left';
+			  }else if(value.AUTHOR.substring(0,4) == 'josh'){
+			  	author = value.AUTHOR.substring(0,4);
+			  	side = 'right'
 			  }else{
-			  	$('.wrapper>div').append('<div class="right"><h1>'+value.AUTHOR+' // '+value.SUBJECT+'</h1><p>'+value.COPY+'</p></div>');
+			  	author = value.AUTHOR;
+			  	side = 'middle someone'
 			  }
+			  if(value.SUBJECT == "gchat"){
+			  	subject = 'gchat'
+			  }else{
+			  	subject = 'Subject: '+value.SUBJECT+'';
 			  }
+			  $('.wrapper>div').append('<div class="'+side+'"><ul class="timestamp"><li>'+value.DATE+'</li><li>'+value.TIME+'</li></ul><h1>From: '+author+' </h1><h2>'+subject+'</h2><p>'+value.COPY+'</p><ul class="attachments"><li>'+value.ATTACHMENTS+'</li></ul></div>');
+			  }
+			});
+		},
+		miscFunctions: function(){
+			$(document).keydown(function(e){
+			    if (e.keyCode == 40) { 
+			    	newVal = parseInt($('#slider').val())+1;
+			    	console.log($('#slider').val(),newVal);
+			       $('#slider').val(newVal);
+			       return false;
+			    }
 			});
 		},
 	};

@@ -2,9 +2,6 @@
  * In this file you should write your main styles. (or centralize your imports)
  * Import this file using the following HTML or equivalent:
  * <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css" /> */
-
-@import "compass/reset";
-
 @mixin transform($transforms) {
 	   -moz-transform: $transforms;
 	     -o-transform: $transforms;
@@ -20,7 +17,10 @@
     transition: $transition-property $transition-time $method;
 }
 
-$font: Andale Mono;
+$font: 'Open Sans', sans-serif;
+
+@import "compass/reset";
+@import "scrollbar.scss";
 
 #header {
 	height: 175px;
@@ -56,25 +56,7 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', end
 	}
 }
 
-#timeline {
-		position: fixed;
-		bottom: 0px;
-		left: 50%;
-		@include transform(translate(-50%,0));
-		@include transition(opacity, 750ms, ease-out);
-		opacity: 0;
-		pointer-events: none;
-		width: 100%;
-		background-color: black;
-		z-index: 100;
-		input{
-			width: 60%;
-			margin: 0px 20%;
-			padding: 10px 0px;
-		}
-		#slider {
-		}
-	}
+
 
 .wrapper {
 	position: fixed;
@@ -85,26 +67,104 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', end
 			padding-bottom: 300px;
 			width: 100%;
 			font-family: $font;
+			// max-width: 500px;
+			ul {
+				margin-top: -15px;
+				li {
+					float: left;
+					margin-right: 10px;
+					font-size: .7em;
+					color: rgba(0,0,0,.5);
+				}
+				li:last-child {
+					margin-right: 0px;
+				}
+			}
+			.attachments {
+				float: left;
+				margin-top: 15px;
+			}
 			h1 {
-				font-size: 1.3em;
-				margin-bottom: 10px;
+				font-size: 1em;
 				font-weight: bold;
+				padding: 25px 0px 15px 0px;
+				line-height: 1.2em;
+			}
+			h2 {
+				padding: 0px 0px 25px 0px;
+				font-size: 1em;
+				font-weight: 300;
+				font-style: italic;
+			}
+			p{
+				color: rgba(0,0,0,.7);
+				font-size: .9em;
+				line-height: 1.3em;
+				width: 90%;
+			}
+		}
+
+		>div.left{
+			h1{
+				border-top: 2px solid pink;
+			}
+			ul {
+				float: left;
+			}
+		}
+		>div.right, >div.middle{
+			h1{
+				border-top: 2px solid blue;
+			}
+			ul {
+				float: right;
+			}
+		}
+		>div.someone {
+			h1 {
+				border-top: 2px solid grey;
 			}
 		}
 		>div:last-child {
 			padding-bottom:0px;
-		}	
+		}
 	}
-	
 	.left {
 		width: 60%;
-		margin-right: 30%;
 		margin-left: 10%;
+		margin-right: 30%;
+		clear: both;
 	}
 	.right {
+		float: right;
 		width: 60%; 
-		margin-left: 30%;
 		margin-right: 10%;
+		margin-left: 30%;
+		z-index: 1;
+		position: relative;
+	}	
+	.middle {
+		float: right;
+		width: 60%; 
+		margin-right: 20%;
+		margin-left: 20%;
+		z-index: 1;
+		position: relative;
 	}
-
+}
+@media (max-width: 640px){
+	.wrapper {
+		.left, .right, .middle {
+			width: 80%; 
+			margin-left: 10%;
+		}
+		.middle {
+			float: left;
+		}
+		>div {
+			>div {
+				padding-bottom: 150px;
+			}
+		}
+	}
 }
