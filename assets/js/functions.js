@@ -29,30 +29,31 @@
 			var position;
 
 			function loaded () {
-				site.myScroll = new IScroll('.wrapper', { probeType: 3, mouseWheel: true });
+				site.myScroll = new IScroll('.wrapper', { probeType: 3, mouseWheel: true, momentum: false });
 
 				site.pixels = parseInt($('.wrapper>div').height())-site.paddingTop;
-				$('#slider').attr('max',site.pixels);
+				// $('#slider').attr('max',site.pixels);
 
-				$('#slider').bind('mousemove change',function(){
-					value =	$('#slider').val();
-					scrollPercent = (value/site.pixels);
-					scrollPoint = scrollPercent*($('.wrapper>div').height()-site.paddingTop);
-					site.myScroll.scrollTo(0, -scrollPoint);
-					updatePosition();
-					console.log(scrollPercent ,value+' scrollPoint: ' +scrollPoint);
-				})
+				// $('#slider').bind('mousemove change',function(){
+				// 	value =	$('#slider').val();
+				// 	scrollPercent = (value/site.pixels);
+				// 	scrollPoint = scrollPercent*($('.wrapper>div').height()-site.paddingTop);
+				// 	site.myScroll.scrollTo(0, -scrollPoint);
+				// 	updatePosition();
+				// 	console.log(scrollPercent ,value+' scrollPoint: ' +scrollPoint);
+				// });
 
 				site.myScroll.on('scroll', function(){
-					updatePosition(),
-					scrollValue = -site.myScroll.y;
-					console.log('scrollValue: ' +scrollValue);
-					$( "#slider" ).val(scrollValue);
+					updatePosition();
+					scrollValue = -site.myScroll.y/parseInt($('.wrapper>div').height());
+					console.log('scrollValue :'+scrollValue);
+					slider.setValue(scrollValue);
 				});
 				site.myScroll.on('scrollEnd', function(){
-					updatePosition(),
-					scrollValue = -site.myScroll.y;
-					$( "#slider" ).val(scrollValue);
+					updatePosition();
+					scrollValue = -site.myScroll.y/parseInt($('.wrapper>div').height());
+					console.log(scrollValue);
+					slider.setValue(scrollValue);
 				});
 			}
 			loaded();
@@ -103,6 +104,16 @@
 					});
 				}
 			}
+
+				var slider = new Dragdealer('slider',{
+				animationCallback: function(x, y) {
+					scrollPercent = x;
+					scrollPoint = scrollPercent*($('.wrapper>div').height()-site.paddingTop);
+					site.myScroll.scrollTo(0, -scrollPoint);
+					updatePosition();
+					console.log(scrollPercent ,' scrollPoint: ' +scrollPoint);
+				}
+			});
 		},
 		resize: function(){
 			$('.wrapper>div>div:eq(0)').css('padding-top',site.paddingTop+15);
@@ -154,13 +165,13 @@
 			});
 		},
 		miscFunctions: function(){
-			$(document).keydown(function(e){
-			    if (e.keyCode == 40) { 
-			    	newVal = parseInt($('#slider').val())+1;
-			       $('#slider').val(newVal);
-			       return false;
-			    }
-			});
+			// $(document).keydown(function(e){
+			//     if (e.keyCode == 40) { 
+			//     	newVal = parseInt($('#slider').val())+1;
+			//        $('#slider').val(newVal);
+			//        return false;
+			//     }
+			// });
 		},
 	};
 
