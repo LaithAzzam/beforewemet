@@ -131,7 +131,7 @@
 		},
 		buildFeed: function(data){
 			$.each(data, function( index, value ) {
-				if(index <= 100){
+				if(index >= 0){
 				index = JSON.stringify(index);
 				content = 	JSON.stringify(value);
 			  if(value.AUTHOR.substring(0,3) == 'tal'){
