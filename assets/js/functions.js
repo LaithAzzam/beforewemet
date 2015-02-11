@@ -166,6 +166,7 @@
 
 	$(document).ready(function (){
 		site.init();
+		site.resize();
 	});
 	
 	$(window).load(function() {
@@ -173,6 +174,7 @@
 	});
 	
 	$(window).resize(function() {
+		console.log('resize');
 		site.resize();
 	});
 

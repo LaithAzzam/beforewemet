@@ -116,26 +116,4 @@ input[type=range]:focus::-ms-fill-upper {
 }
 
 @media (max-width: 640px){
-	#timeline {
-		position: fixed;
-		top: 5%;
-		left: -5px;
-		@include transition(opacity, 750ms, ease-out);
-		@include transform(translate(-50%,0) rotate(180deg));
-		opacity: 0;
-		pointer-events: none;
-		width: 20px;
-		height: 90%;
-		background-color: rgba(255,255,255,.95);
-		z-index: 100;
-		input{
-			height: 100%;
-			width: 100%;
-			padding: 0px;
-			margin: 0px;
-			-webkit-appearance: slider-vertical;
-		}
-		#slider {
-		}
-	}
 }

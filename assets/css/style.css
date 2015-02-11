@@ -196,38 +196,6 @@ input[type=range]::-ms-fill-upper {
   border: 0.2px solid #010101;
 }
 
-@media (max-width: 640px) {
-  /* line 119, ../sass/_scrollbar.scss */
-  #timeline {
-    position: fixed;
-    top: 5%;
-    left: -5px;
-    -webkit-transition: opacity 750ms ease-out;
-    -moz-transition: opacity 750ms ease-out;
-    -ms-transition: opacity 750ms ease-out;
-    -o-transition: opacity 750ms ease-out;
-    transition: opacity 750ms ease-out;
-    -moz-transform: translate(-50%, 0) rotate(180deg);
-    -o-transform: translate(-50%, 0) rotate(180deg);
-    -ms-transform: translate(-50%, 0) rotate(180deg);
-    -webkit-transform: translate(-50%, 0) rotate(180deg);
-    transform: translate(-50%, 0) rotate(180deg);
-    opacity: 0;
-    pointer-events: none;
-    width: 20px;
-    height: 90%;
-    background-color: rgba(255, 255, 255, 0.95);
-    z-index: 100;
-  }
-  /* line 131, ../sass/_scrollbar.scss */
-  #timeline input {
-    height: 100%;
-    width: 100%;
-    padding: 0px;
-    margin: 0px;
-    -webkit-appearance: slider-vertical;
-  }
-}
 /* line 25, ../sass/style.scss */
 #header {
   height: 175px;
