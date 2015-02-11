@@ -15,7 +15,8 @@
 
 		myScroll:'',
 		emails: $('.wrapper>div>div'),
-		paddingTop: window.innerHeight+15,
+		paddingTop: window.innerHeight,
+		pixels:'',
 
 		init: function(){
 			site.spreadsheet();
@@ -30,21 +31,27 @@
 			function loaded () {
 				site.myScroll = new IScroll('.wrapper', { probeType: 3, mouseWheel: true });
 
-				$('#slider').on('mousemove change',function(){
-					scrollPoint = (($(this).val()/10000)*($('.wrapper>div').height()));
+				site.pixels = parseInt($('.wrapper>div').height())-site.paddingTop;
+				$('#slider').attr('max',site.pixels);
+
+				$('#slider').bind('mousemove change',function(){
+					value =	$('#slider').val();
+					scrollPercent = (value/site.pixels);
+					scrollPoint = scrollPercent*($('.wrapper>div').height()-site.paddingTop);
 					site.myScroll.scrollTo(0, -scrollPoint);
-					console.log($('#slider').val());
 					updatePosition();
+					console.log(scrollPercent ,value+' scrollPoint: ' +scrollPoint);
 				})
 
 				site.myScroll.on('scroll', function(){
 					updatePosition(),
-					scrollValue = (-site.myScroll.y/($('.wrapper>div').height()))*10000;
+					scrollValue = -site.myScroll.y;
+					console.log('scrollValue: ' +scrollValue);
 					$( "#slider" ).val(scrollValue);
 				});
 				site.myScroll.on('scrollEnd', function(){
 					updatePosition(),
-					scrollValue = (-site.myScroll.y/($('.wrapper>div').height()))*10000;
+					scrollValue = -site.myScroll.y;
 					$( "#slider" ).val(scrollValue);
 				});
 			}
@@ -52,7 +59,7 @@
 
 			document.addEventListener('touchmove', function (e) { e.preventDefault(); }, false);
 			function updatePosition () {
-				scrollDistance = site.paddingTop/2;
+				scrollDistance = site.paddingTop/1.5;
 				logoPosition = 50+(site.myScroll.y/scrollDistance)*50;
 				logoScale = 1.2+(site.myScroll.y/scrollDistance);
 				logoOpacity = 1+(site.myScroll.y/scrollDistance);
@@ -98,7 +105,7 @@
 			}
 		},
 		resize: function(){
-			$('.wrapper>div>div:eq(0)').css('padding-top',site.paddingTop);
+			$('.wrapper>div>div:eq(0)').css('padding-top',site.paddingTop+15);
 			paddingBottom = ( site.paddingTop-$('.wrapper>div>div').last().height() )/2;
 			if(paddingBottom <= 50){
 				paddingBottom = 100
@@ -150,7 +157,6 @@
 			$(document).keydown(function(e){
 			    if (e.keyCode == 40) { 
 			    	newVal = parseInt($('#slider').val())+1;
-			    	console.log($('#slider').val(),newVal);
 			       $('#slider').val(newVal);
 			       return false;
 			    }
