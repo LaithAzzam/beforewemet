@@ -111,6 +111,9 @@
 				paddingBottom = 100
 			}
 			$('.wrapper>div>div').last().css('padding-bottom', paddingBottom);
+
+			site.pixels = parseInt($('.wrapper>div').height())-site.paddingTop;
+			$('#slider').attr('max',site.pixels);
 		},
 		spreadsheet: function(){
 

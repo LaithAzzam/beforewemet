@@ -71,12 +71,7 @@ article, aside, details, figcaption, figure, footer, header, hgroup, main, menu,
 #timeline {
   position: fixed;
   bottom: -5px;
-  left: 50%;
-  -moz-transform: translate(-50%, 0);
-  -o-transform: translate(-50%, 0);
-  -ms-transform: translate(-50%, 0);
-  -webkit-transform: translate(-50%, 0);
-  transform: translate(-50%, 0);
+  left: 0px;
   -webkit-transition: opacity 750ms ease-out;
   -moz-transition: opacity 750ms ease-out;
   -ms-transition: opacity 750ms ease-out;
@@ -87,13 +82,13 @@ article, aside, details, figcaption, figure, footer, header, hgroup, main, menu,
   width: 100%;
   z-index: 100;
 }
-/* line 11, ../sass/_scrollbar.scss */
+/* line 10, ../sass/_scrollbar.scss */
 #timeline input {
-  width: 60%;
-  margin: 0px 20%;
+  width: 100%;
+  margin: 0px;
 }
 
-/* line 19, ../sass/_scrollbar.scss */
+/* line 18, ../sass/_scrollbar.scss */
 input[type=range] {
   -webkit-appearance: none;
   /* Hides the slider so that custom slider can be made */
@@ -101,18 +96,18 @@ input[type=range] {
   /* Specific width is required for Firefox. */
 }
 
-/* line 24, ../sass/_scrollbar.scss */
+/* line 23, ../sass/_scrollbar.scss */
 input[type=range]::-webkit-slider-thumb {
   -webkit-appearance: none;
 }
 
-/* line 28, ../sass/_scrollbar.scss */
+/* line 27, ../sass/_scrollbar.scss */
 input[type=range]:focus {
   outline: none;
   /* Removes the blue border. You should probably do some kind of focus styling for accessibility reasons though. */
 }
 
-/* line 32, ../sass/_scrollbar.scss */
+/* line 31, ../sass/_scrollbar.scss */
 input[type=range]::-ms-track {
   width: 100%;
   cursor: pointer;
@@ -123,7 +118,7 @@ input[type=range]::-ms-track {
 }
 
 /* Special styling for WebKit/Blink */
-/* line 43, ../sass/_scrollbar.scss */
+/* line 42, ../sass/_scrollbar.scss */
 input[type=range]::-webkit-slider-thumb {
   -webkit-appearance: none;
   border: none;
@@ -136,7 +131,7 @@ input[type=range]::-webkit-slider-thumb {
 }
 
 /* All the same stuff for Firefox */
-/* line 54, ../sass/_scrollbar.scss */
+/* line 53, ../sass/_scrollbar.scss */
 input[type=range]::-moz-range-thumb {
   border: 1px solid #000000;
   height: 20px;
@@ -146,7 +141,7 @@ input[type=range]::-moz-range-thumb {
 }
 
 /* All the same stuff for IE */
-/* line 63, ../sass/_scrollbar.scss */
+/* line 62, ../sass/_scrollbar.scss */
 input[type=range]::-ms-thumb {
   border: 1px solid #000000;
   height: 20px;
@@ -155,7 +150,7 @@ input[type=range]::-ms-thumb {
   cursor: pointer;
 }
 
-/* line 74, ../sass/_scrollbar.scss */
+/* line 73, ../sass/_scrollbar.scss */
 input[type=range]::-webkit-slider-runnable-track {
   width: 100%;
   height: 8.4px;
@@ -164,7 +159,7 @@ input[type=range]::-webkit-slider-runnable-track {
   border: 0.2px solid #010101;
 }
 
-/* line 86, ../sass/_scrollbar.scss */
+/* line 85, ../sass/_scrollbar.scss */
 input[type=range]::-moz-range-track {
   width: 100%;
   height: 8.4px;
@@ -173,7 +168,7 @@ input[type=range]::-moz-range-track {
   border: 0.2px solid #010101;
 }
 
-/* line 94, ../sass/_scrollbar.scss */
+/* line 93, ../sass/_scrollbar.scss */
 input[type=range]::-ms-track {
   width: 100%;
   height: 8.4px;
@@ -184,13 +179,13 @@ input[type=range]::-ms-track {
   color: transparent;
 }
 
-/* line 103, ../sass/_scrollbar.scss */
+/* line 102, ../sass/_scrollbar.scss */
 input[type=range]::-ms-fill-lower {
   background: #2a6495;
   border: 0.2px solid #010101;
 }
 
-/* line 110, ../sass/_scrollbar.scss */
+/* line 109, ../sass/_scrollbar.scss */
 input[type=range]::-ms-fill-upper {
   background: #a6a5a5;
   border: 0.2px solid #010101;
