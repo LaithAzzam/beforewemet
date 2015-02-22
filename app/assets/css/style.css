@@ -1,0 +1,387 @@
+/* Welcome to Compass.
+ * In this file you should write your main styles. (or centralize your imports)
+ * Import this file using the following HTML or equivalent:
+ * <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css" /> */
+/* line 5, ../../../../../../.rvm/rubies/ruby-2.1.3/lib/ruby/gems/2.1.0/gems/compass-core-1.0.1/stylesheets/compass/reset/_utilities.scss */
+html, body, div, span, applet, object, iframe,
+h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+a, abbr, acronym, address, big, cite, code,
+del, dfn, em, img, ins, kbd, q, s, samp,
+small, strike, strong, sub, sup, tt, var,
+b, u, i, center,
+dl, dt, dd, ol, ul, li,
+fieldset, form, label, legend,
+table, caption, tbody, tfoot, thead, tr, th, td,
+article, aside, canvas, details, embed,
+figure, figcaption, footer, header, hgroup,
+menu, nav, output, ruby, section, summary,
+time, mark, audio, video {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  font: inherit;
+  font-size: 100%;
+  vertical-align: baseline;
+}
+
+/* line 22, ../../../../../../.rvm/rubies/ruby-2.1.3/lib/ruby/gems/2.1.0/gems/compass-core-1.0.1/stylesheets/compass/reset/_utilities.scss */
+html {
+  line-height: 1;
+}
+
+/* line 24, ../../../../../../.rvm/rubies/ruby-2.1.3/lib/ruby/gems/2.1.0/gems/compass-core-1.0.1/stylesheets/compass/reset/_utilities.scss */
+ol, ul {
+  list-style: none;
+}
+
+/* line 26, ../../../../../../.rvm/rubies/ruby-2.1.3/lib/ruby/gems/2.1.0/gems/compass-core-1.0.1/stylesheets/compass/reset/_utilities.scss */
+table {
+  border-collapse: collapse;
+  border-spacing: 0;
+}
+
+/* line 28, ../../../../../../.rvm/rubies/ruby-2.1.3/lib/ruby/gems/2.1.0/gems/compass-core-1.0.1/stylesheets/compass/reset/_utilities.scss */
+caption, th, td {
+  text-align: left;
+  font-weight: normal;
+  vertical-align: middle;
+}
+
+/* line 30, ../../../../../../.rvm/rubies/ruby-2.1.3/lib/ruby/gems/2.1.0/gems/compass-core-1.0.1/stylesheets/compass/reset/_utilities.scss */
+q, blockquote {
+  quotes: none;
+}
+/* line 103, ../../../../../../.rvm/rubies/ruby-2.1.3/lib/ruby/gems/2.1.0/gems/compass-core-1.0.1/stylesheets/compass/reset/_utilities.scss */
+q:before, q:after, blockquote:before, blockquote:after {
+  content: "";
+  content: none;
+}
+
+/* line 32, ../../../../../../.rvm/rubies/ruby-2.1.3/lib/ruby/gems/2.1.0/gems/compass-core-1.0.1/stylesheets/compass/reset/_utilities.scss */
+a img {
+  border: none;
+}
+
+/* line 116, ../../../../../../.rvm/rubies/ruby-2.1.3/lib/ruby/gems/2.1.0/gems/compass-core-1.0.1/stylesheets/compass/reset/_utilities.scss */
+article, aside, details, figcaption, figure, footer, header, hgroup, main, menu, nav, section, summary {
+  display: block;
+}
+
+/* line 1, ../sass/_scrollbar.scss */
+#timeline {
+  position: fixed;
+  bottom: -5px;
+  left: 0px;
+  -webkit-transition: opacity 750ms ease-out;
+  -moz-transition: opacity 750ms ease-out;
+  -ms-transition: opacity 750ms ease-out;
+  -o-transition: opacity 750ms ease-out;
+  transition: opacity 750ms ease-out;
+  opacity: 0;
+  pointer-events: none;
+  width: 100%;
+  z-index: 100;
+}
+/* line 10, ../sass/_scrollbar.scss */
+#timeline input {
+  width: 100%;
+  margin: 0px;
+  padding: 0px;
+  box-shadow: 0px 0px 2px rgba(0, 0, 0, 0.2);
+}
+/* line 18, ../sass/_scrollbar.scss */
+#timeline .leftFill {
+  position: absolute;
+  left: 0px;
+  top: 2px;
+  height: 100%;
+  width: 50%;
+  background-color: #ccc;
+  pointer-events: none;
+}
+
+/* line 27, ../sass/_scrollbar.scss */
+input[type=range] {
+  -webkit-appearance: none;
+  /* Hides the slider so that custom slider can be made */
+  width: 100%;
+  /* Specific width is required for Firefox. */
+}
+
+/* line 32, ../sass/_scrollbar.scss */
+input[type=range]::-webkit-slider-thumb {
+  -webkit-appearance: none;
+}
+
+/* line 36, ../sass/_scrollbar.scss */
+input[type=range]:focus {
+  outline: none;
+  /* Removes the blue border. You should probably do some kind of focus styling for accessibility reasons though. */
+}
+
+/* line 40, ../sass/_scrollbar.scss */
+input[type=range]::-ms-track {
+  width: 100%;
+  cursor: pointer;
+  background: transparent;
+  /* Hides the slider so custom styles can be added */
+  border-color: transparent;
+  color: transparent;
+}
+
+/* Special styling for WebKit/Blink */
+/* line 51, ../sass/_scrollbar.scss */
+input[type=range]::-webkit-slider-thumb {
+  position: relative;
+  z-index: 150;
+  -webkit-appearance: none;
+  border: none;
+  height: 20px;
+  width: 5px;
+  background: #aaa;
+  cursor: pointer;
+  margin-top: 0px;
+  /* You need to specify a margin in Chrome, but in Firefox and IE it is automatic */
+}
+
+/* All the same stuff for Firefox */
+/* line 64, ../sass/_scrollbar.scss */
+input[type=range]::-moz-range-thumb {
+  position: relative;
+  z-index: 150;
+  border: 1px solid #000000;
+  height: 20px;
+  width: 5px;
+  background: #aaa;
+  cursor: pointer;
+}
+
+/* All the same stuff for IE */
+/* line 75, ../sass/_scrollbar.scss */
+input[type=range]::-ms-thumb {
+  position: relative;
+  z-index: 150;
+  border: 1px solid #000000;
+  height: 20px;
+  width: 5px;
+  background: #aaa;
+  cursor: pointer;
+}
+
+/* line 88, ../sass/_scrollbar.scss */
+input[type=range]::-webkit-slider-runnable-track {
+  width: 100%;
+  height: 10px;
+  cursor: pointer;
+  background: white;
+  border: 0.2px solid #010101;
+}
+
+/* line 100, ../sass/_scrollbar.scss */
+input[type=range]::-moz-range-track {
+  width: 100%;
+  height: 10px;
+  cursor: pointer;
+  background: white;
+  border: 0.2px solid #010101;
+}
+
+/* line 108, ../sass/_scrollbar.scss */
+input[type=range]::-ms-track {
+  width: 100%;
+  height: 10px;
+  cursor: pointer;
+  background: transparent;
+  border-color: transparent;
+  border-width: 16px 0;
+  color: transparent;
+}
+
+/* line 117, ../sass/_scrollbar.scss */
+input[type=range]::-ms-fill-lower {
+  background: #2a6495;
+  border: 0.2px solid #010101;
+}
+
+/* line 124, ../sass/_scrollbar.scss */
+input[type=range]::-ms-fill-upper {
+  background: white;
+  border: 0.2px solid #010101;
+}
+
+/* line 25, ../sass/style.scss */
+#header {
+  height: 175px;
+  width: 100%;
+  position: relative;
+  z-index: 10;
+  pointer-events: none;
+  background: -moz-linear-gradient(top, white 0%, white 33%, rgba(255, 255, 255, 0.9) 40%, rgba(255, 255, 255, 0) 100%);
+  /* FF3.6+ */
+  background: -webkit-gradient(linear, left top, left bottom, color-stop(0%, white), color-stop(33%, white), color-stop(40%, rgba(255, 255, 255, 0.9)), color-stop(100%, rgba(255, 255, 255, 0)));
+  /* Chrome,Safari4+ */
+  background: -webkit-linear-gradient(top, white 0%, white 33%, rgba(255, 255, 255, 0.9) 40%, rgba(255, 255, 255, 0) 100%);
+  /* Chrome10+,Safari5.1+ */
+  background: -o-linear-gradient(top, white 0%, white 33%, rgba(255, 255, 255, 0.9) 40%, rgba(255, 255, 255, 0) 100%);
+  /* Opera 11.10+ */
+  background: -ms-linear-gradient(top, white 0%, white 33%, rgba(255, 255, 255, 0.9) 40%, rgba(255, 255, 255, 0) 100%);
+  /* IE10+ */
+  background: linear-gradient(to bottom, white 0%, white 33%, rgba(255, 255, 255, 0.9) 40%, rgba(255, 255, 255, 0) 100%);
+  /* W3C */
+  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', endColorstr='#00ffffff',GradientType=0 );
+  /* IE6-9 */
+}
+/* line 38, ../sass/style.scss */
+#header h1 {
+  margin-top: 25px;
+  opacity: 0;
+}
+/* line 42, ../sass/style.scss */
+#header a {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  -moz-transform: translate(-50%, -50%);
+  -o-transform: translate(-50%, -50%);
+  -ms-transform: translate(-50%, -50%);
+  -webkit-transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%);
+  font-family: "Open Sans", sans-serif;
+  text-decoration: none;
+  color: black;
+  opacity: .6;
+  cursor: pointer;
+  cursor: hand;
+  display: block;
+}
+
+/* line 60, ../sass/style.scss */
+.wrapper {
+  position: fixed;
+  top: 0;
+  left: 0%;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+}
+/* line 63, ../sass/style.scss */
+.wrapper > div {
+  padding: 0% 0% 0% 0%;
+}
+/* line 65, ../sass/style.scss */
+.wrapper > div > div {
+  padding-bottom: 300px;
+  width: 100%;
+  font-family: "Open Sans", sans-serif;
+}
+/* line 70, ../sass/style.scss */
+.wrapper > div > div ul {
+  margin-top: -15px;
+}
+/* line 72, ../sass/style.scss */
+.wrapper > div > div ul li {
+  float: left;
+  margin-right: 10px;
+  font-size: .7em;
+  color: rgba(0, 0, 0, 0.5);
+}
+/* line 78, ../sass/style.scss */
+.wrapper > div > div ul li:last-child {
+  margin-right: 0px;
+}
+/* line 82, ../sass/style.scss */
+.wrapper > div > div .attachments {
+  float: left;
+  margin-top: 15px;
+}
+/* line 86, ../sass/style.scss */
+.wrapper > div > div h1 {
+  font-size: 1em;
+  font-weight: bold;
+  padding: 25px 0px 15px 0px;
+  line-height: 1.2em;
+}
+/* line 92, ../sass/style.scss */
+.wrapper > div > div h2 {
+  padding: 0px 0px 25px 0px;
+  font-size: 1em;
+  font-weight: 300;
+  font-style: italic;
+}
+/* line 98, ../sass/style.scss */
+.wrapper > div > div p {
+  color: rgba(0, 0, 0, 0.7);
+  font-size: .9em;
+  line-height: 1.3em;
+  width: 90%;
+}
+/* line 107, ../sass/style.scss */
+.wrapper > div > div.left h1 {
+  border-top: 2px solid pink;
+}
+/* line 110, ../sass/style.scss */
+.wrapper > div > div.left ul {
+  float: left;
+}
+/* line 115, ../sass/style.scss */
+.wrapper > div > div.right h1, .wrapper > div > div.middle h1 {
+  border-top: 2px solid #7bccf6;
+}
+/* line 118, ../sass/style.scss */
+.wrapper > div > div.right ul, .wrapper > div > div.middle ul {
+  float: right;
+}
+/* line 123, ../sass/style.scss */
+.wrapper > div > div.someone h1 {
+  border-top: 2px solid grey;
+}
+/* line 127, ../sass/style.scss */
+.wrapper > div > div:last-child {
+  padding-bottom: 0px;
+}
+/* line 131, ../sass/style.scss */
+.wrapper .left {
+  width: 60%;
+  margin-left: 10%;
+  margin-right: 30%;
+  clear: both;
+}
+/* line 137, ../sass/style.scss */
+.wrapper .right {
+  float: right;
+  width: 60%;
+  margin-right: 10%;
+  margin-left: 30%;
+  z-index: 1;
+  position: relative;
+}
+/* line 145, ../sass/style.scss */
+.wrapper .middle {
+  float: right;
+  width: 60%;
+  margin-right: 20%;
+  margin-left: 20%;
+  z-index: 1;
+  position: relative;
+}
+
+@media (max-width: 640px) {
+  /* line 155, ../sass/style.scss */
+  #header {
+    height: 155px;
+  }
+
+  /* line 159, ../sass/style.scss */
+  .wrapper .left, .wrapper .right, .wrapper .middle {
+    width: 80%;
+    margin-left: 10%;
+  }
+  /* line 163, ../sass/style.scss */
+  .wrapper .middle {
+    float: left;
+  }
+  /* line 167, ../sass/style.scss */
+  .wrapper > div > div {
+    padding-bottom: 150px;
+  }
+}
