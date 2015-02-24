@@ -35,7 +35,7 @@
 	initial-scale = 1.0 retains dimensions instead of zooming out if page height > device height
 	maximum-scale = 1.0 retains dimensions instead of zooming in if page width < device width (wrong for most sites)
 	-->
-	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 	
 	<!-- Use Iconifyer to generate all the favicons and touch icons you need: http://iconifier.net -->
 	<link rel="shortcut icon" href="favicon.ico" />
@@ -78,8 +78,6 @@
 </form>
 	
 <div class="wrapper">
-<div>
-</div>
 </div>
 
 <!-- Grab Google CDN's jQuery. fall back to local if necessary -->
@@ -88,11 +86,9 @@
 
 <!-- this is where we put our custom functions -->
 <!-- don't forget to concatenate and minify if needed -->
-
 <script src="assets/js/libs/rangetouch.js"></script>
 <script src="assets/js/libs/jquery-ui.js"></script>
 <script src="assets/js/libs/dragdealer.js"></script>
-<script src="assets/js/libs/iscroll-probe.js"></script>
 <script src="assets/js/libs/tabletop.js"></script>
 <script src="assets/js/functions.js"></script>
 

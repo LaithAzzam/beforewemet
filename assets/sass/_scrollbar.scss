@@ -1,6 +1,6 @@
 #timeline {
 	position: fixed;
-	bottom: -5px;
+	bottom: 0px;
 	left: 0px;
 	@include transition(opacity, 750ms, ease-out);
 	opacity: 0;
@@ -17,7 +17,7 @@
 	}
   .leftFill {
     position: absolute;
-    left: 0px; top: 2px;
+    left: 0px; top: 0px;
     height: 100%; width: 50%;
     background-color: #ccc;
     pointer-events: none;

@@ -14,7 +14,7 @@
 	site = {
 
 		myScroll:'',
-		emails: $('.wrapper>div>div'),
+		emails: $('.wrapper>div'),
 		paddingTop: window.innerHeight,
 		pixels:'',
 
@@ -29,46 +29,46 @@
 			var position;
 
 			function loaded () {
-				site.myScroll = new IScroll('.wrapper', { probeType: 3, mouseWheel: true });
-
-				site.pixels = parseInt($('.wrapper>div').height())-site.paddingTop;
+				site.pixels = parseInt($('.wrapper').height())-site.paddingTop;
 				$('#slider').attr('max',site.pixels);
 
 				$('#slider').bind('mousemove change',function(){
 					value =	$('#slider').val();
 					scrollPercent = (value/site.pixels);
-					scrollPoint = scrollPercent*($('.wrapper>div').height()-site.paddingTop);
+					scrollPoint = scrollPercent*($('.wrapper').height()-site.paddingTop);
 					site.myScroll.scrollTo(0, -scrollPoint);
 					updatePosition();
-					console.log('slider:' +site.myScroll.y);
+					console.log('slider:' +$(window).scrollTop());
 				})
+				document.addEventListener("touchmove", ScrollStart, false);
+				document.addEventListener("scroll", Scroll, false);
 
-				site.myScroll.on('scroll', function(){
+				function ScrollStart() {
 					updatePosition(),
-					scrollValue = -site.myScroll.y;
+					scrollValue = $(window).scrollTop();
 					$( "#slider" ).val(scrollValue);
-				});
-				site.myScroll.on('scrollEnd', function(){
+				}
+
+				function Scroll() {
 					updatePosition(),
-					scrollValue = -site.myScroll.y;
+					scrollValue = $(window).scrollTop();
 					$( "#slider" ).val(scrollValue);
-				});
+				}
 			}
 			loaded();
 
-			document.addEventListener('touchmove', function (e) { e.preventDefault(); }, false);
 			function updatePosition () {
 				scrollDistance = site.paddingTop/1.5;
-				logoPosition = 50+((site.myScroll.y/scrollDistance)*50);
-				logoScale = 1+(site.myScroll.y/scrollDistance);
-				logoOpacity = 1+(site.myScroll.y/scrollDistance);
+				logoPosition = 50-(($(window).scrollTop()/scrollDistance)*50);
+				logoScale = 1-($(window).scrollTop()/scrollDistance);
+				logoOpacity = 1-($(window).scrollTop()/scrollDistance);
 				console.log('updatePosition: '+site.myScroll.y, 'logoPosition: '+logoPosition, 'logoScale: '+logoScale);
 
 				logo = $('#header>a');
-				scrollPercent = (-site.myScroll.y/site.pixels)*100;
+				scrollPercent = ($(window).scrollTop()/site.pixels)*100;
 				$('.leftFill').css('width',scrollPercent+"%");
 
-				if(-site.myScroll.y <= window.innerHeight){
+				if($(window).scrollTop() <= window.innerHeight){
 					if(logoScale <= 1 && logoScale >= .3){
 						logo.css({
 							'-webkit-transform' : 'translate(-50%,-50%) scale(' + logoScale + ')',
@@ -117,14 +117,14 @@
 			}
 		},
 		resize: function(){
-			$('.wrapper>div>div:eq(0)').css('padding-top',site.paddingTop+15);
-			paddingBottom = ( site.paddingTop-$('.wrapper>div>div').last().height() )/2;
+			$('.wrapper>div:eq(0)').css('padding-top',site.paddingTop+15);
+			paddingBottom = ( site.paddingTop-$('.wrapper>div').last().height() )/2;
 			if(paddingBottom <= 50){
 				paddingBottom = 100
 			}
-			$('.wrapper>div>div').last().css('padding-bottom', paddingBottom);
+			$('.wrapper>div').last().css('padding-bottom', paddingBottom);
 
-			site.pixels = parseInt($('.wrapper>div').height())-site.paddingTop;
+			site.pixels = parseInt($('.wrapper').height())-site.paddingTop;
 			$('#slider').attr('max',site.pixels);
 		},
 		spreadsheet: function(){
@@ -142,6 +142,7 @@
 				    console.log(json); // this will show the info it in firebug console
 			    	site.buildFeed(json);
 					site.probe();
+					
 				});
 
 			  function showInfo(data, tabletop) {
@@ -155,20 +156,25 @@
 				content = 	JSON.stringify(value);
 			  if(value.AUTHOR.substring(0,3) == 'tal'){
 			  	author = value.AUTHOR.substring(0,3);
-			  	side = 'left';
+			  	side = 'right';
 			  }else if(value.AUTHOR.substring(0,4) == 'josh'){
 			  	author = value.AUTHOR.substring(0,4);
-			  	side = 'right'
+			  	side = 'left'
 			  }else{
-			  	author = value.AUTHOR;
+			  	author = 'none';
 			  	side = 'middle someone'
 			  }
 			  if(value.SUBJECT == "gchat"){
-			  	subject = 'gchat'
+			  	subject = ''
 			  }else{
 			  	subject = 'Subject: '+value.SUBJECT+'';
 			  }
-			  $('.wrapper>div').append('<div class="'+side+'"><ul class="timestamp"><li>'+value.DATE+'</li><li>'+value.TIME+'</li></ul><h1>From: '+author+' </h1><h2>'+subject+'</h2><p>'+value.COPY+'</p><ul class="attachments"><li>'+value.ATTACHMENTS+'</li></ul></div>');
+			  last = $('.wrapper>div').last();
+			  if(last.attr('class')==side){
+			  	$('.wrapper>div').last().append('<p>'+value.COPY+'</p>');
+			  }else if(author != 'none' ){
+			  	$('.wrapper').append('<div class="'+side+'" data-end="opacity:0" data-start="opacity:1;"><h2>'+subject+'</h2><p>'+value.COPY+'</p></div>');
+			  }
 			  }
 			});
 		},
@@ -192,7 +198,6 @@
 	});
 	
 	$(window).resize(function() {
-		site.probe.updatePosition();
 		site.resize();
 	});
 
