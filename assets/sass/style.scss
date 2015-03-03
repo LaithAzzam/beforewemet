@@ -72,18 +72,6 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', end
 		width: 40%;
 		margin-bottom: 25px;
 		// max-width: 500px;
-		ul {
-			margin-top: -15px;
-			li {
-				float: left;
-				margin-right: 10px;
-				font-size: .7em;
-				color: rgba(0,0,0,.5);
-			}
-			li:last-child {
-				margin-right: 0px;
-			}
-		}
 		.attachments {
 			float: left;
 			margin-top: 15px;
@@ -110,6 +98,15 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', end
 			padding: 0px 15px 15px 15px;
 			color: white;
 			position: relative;
+			ul {
+				margin-top: 15px;
+				margin-bottom: 5px;
+				li {
+					a {
+						color: grey;
+					}
+				}
+			}
 		}
 		p:after {
 			content: '';
@@ -128,16 +125,10 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', end
 		h1{
 			border-top: 2px solid pink;
 		}
-		ul {
-			float: left;
-		}
 	}
 	>div.right, >div.middle{
 		h1{
 			border-top: 2px solid #7bccf6;
-		}
-		ul {
-			float: right;
 		}
 	}
 	>div.someone {

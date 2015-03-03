@@ -33,12 +33,12 @@
 				$('#slider').attr('max',site.pixels);
 
 				$('#slider').bind('mousemove change',function(){
-					value =	$('#slider').val();
-					scrollPercent = (value/site.pixels);
-					scrollPoint = scrollPercent*($('.wrapper').height()-site.paddingTop);
-					site.myScroll.scrollTo(0, -scrollPoint);
-					updatePosition();
-					console.log('slider:' +$(window).scrollTop());
+					// value =	$('#slider').val();
+					// scrollPercent = (value/site.pixels);
+					// scrollPoint = scrollPercent*($('.wrapper').height()-site.paddingTop);
+					// $(window).scrollTop(0, -scrollPoint);
+					// updatePosition();
+					// console.log('slider:' +$(window).scrollTop());
 				})
 				document.addEventListener("touchmove", ScrollStart, false);
 				document.addEventListener("scroll", Scroll, false);
@@ -62,7 +62,6 @@
 				logoPosition = 50-(($(window).scrollTop()/scrollDistance)*50);
 				logoScale = 1-($(window).scrollTop()/scrollDistance);
 				logoOpacity = 1-($(window).scrollTop()/scrollDistance);
-				console.log('updatePosition: '+site.myScroll.y, 'logoPosition: '+logoPosition, 'logoScale: '+logoScale);
 
 				logo = $('#header>a');
 				scrollPercent = ($(window).scrollTop()/site.pixels)*100;
@@ -107,8 +106,6 @@
 					});
 
 				}
-
-				
 				// if(logoPosition>=5 && logoPosition <=50){
 				// 	
 				// }else{
@@ -139,7 +136,7 @@
 			  }
 
 			  $.getJSON("assets/js/messages.json", function(json) {
-				    console.log(json); // this will show the info it in firebug console
+				    // console.log(json); // this will show the info it in firebug console
 			    	site.buildFeed(json);
 					site.probe();
 					
@@ -150,32 +147,114 @@
 			  init();
 		},
 		buildFeed: function(data){
+			wrapper = document.getElementsByClassName('wrapper')[0];
+			
+			function userTime(){
+				year = 2010;
+				month = 5;
+				day = 19;
+				hours = 24;
+				minutes = 0;
+				var currentDate = new Date(year, month, day, hours, minutes);
+				current_miliseconds = currentDate.getTime();
+			}
+			userTime();
+
 			$.each(data, function( index, value ) {
-				if(index >= 0){
 				index = JSON.stringify(index);
-				content = 	JSON.stringify(value);
-			  if(value.AUTHOR.substring(0,3) == 'tal'){
-			  	author = value.AUTHOR.substring(0,3);
-			  	side = 'right';
-			  }else if(value.AUTHOR.substring(0,4) == 'josh'){
-			  	author = value.AUTHOR.substring(0,4);
-			  	side = 'left'
-			  }else{
-			  	author = 'none';
-			  	side = 'middle someone'
-			  }
-			  if(value.SUBJECT == "gchat"){
-			  	subject = ''
-			  }else{
-			  	subject = 'Subject: '+value.SUBJECT+'';
-			  }
-			  last = $('.wrapper>div').last();
-			  if(last.attr('class')==side){
-			  	$('.wrapper>div').last().append('<p>'+value.COPY+'</p>');
-			  }else if(author != 'none' ){
-			  	$('.wrapper').append('<div class="'+side+'" data-end="opacity:0" data-start="opacity:1;"><h2>'+subject+'</h2><p>'+value.COPY+'</p></div>');
-			  }
-			  }
+				content = JSON.stringify(value);
+
+				item_date_parts = value.DATE.split("/"), parts = [];
+				item_time_parts = value.TIME.split(":"), parts = [];
+
+				year = item_date_parts[2];
+				month = item_date_parts[0]-1;
+				day = item_date_parts[1];
+				hours = item_time_parts[0];
+				minutes = item_time_parts[1];
+				var item_date = new Date(year, month, day, hours, minutes);
+
+				item_miliseconds = item_date.getTime();
+
+				function author(){
+					// set author per item
+					if(value.AUTHOR.substring(0,3) == 'tal'){
+						author = value.AUTHOR.substring(0,3);
+						side = 'right';
+					}else if(value.AUTHOR.substring(0,4) == 'josh'){
+						author = value.AUTHOR.substring(0,4);
+						side = 'left'
+					}else{
+						author = 'none';
+						side = 'middle someone'
+					}
+				};
+				function subject(){
+					// use subject to determine if message is ghat or email
+					if(value.SUBJECT == "gchat"){
+						// if gchat, set subject to nothing to know it's gchat
+						subject = ''
+					}else{
+						subject = 'Subject: '+value.SUBJECT+'';
+					}
+				};
+				function copy(){
+					copyRaw = JSON.stringify(value.COPY);
+					copy = copyRaw.replace(/[\\]n/g, '<br/>').replace(/\"/g, "");
+				};
+				function attachments(){
+					if(value.ATTACHMENTS == ''){
+						item_attachments = false;
+					}else{
+						item_attachments_raw = JSON.stringify(value.ATTACHMENTS).split(/[\\]n/g), parts = [];
+
+						function makeUL(array) {
+							console.log('makingLIst');
+						    // Create the list element:
+						    var list = document.createElement('ul');
+
+						    for(var i = 0; i < array.length; i++) {
+						        // Create the list item:
+						        var link = document.createElement('a');
+						        link.href = 'assets/attachments/'+array[i].replace(/\"/g, "");
+						        link.target = '_blank';
+						        var item = document.createElement('li');
+
+						        // Set its contents:
+						        item.appendChild(link).appendChild(document.createTextNode(array[i].replace(/\"/g, "")));
+
+						        // Add it to the list:
+						        list.appendChild(item);
+						    }
+
+						    console.log(list);
+						    // Finally, return the constructed list:
+						    return list;
+						}
+						item_attachments = makeUL(item_attachments_raw);
+					}
+				}
+				function buildMessage(){
+					// build message content
+					author();
+					subject();
+					copy();
+					attachments();
+				}
+
+				if(current_miliseconds >= item_miliseconds ){
+					buildMessage();
+					last = $('.wrapper>div').last();
+					if(last.attr('class')==side){
+						$('.wrapper>div').last().append('<p>'+value.COPY+'</p>');
+					}else if(author != 'none'){
+						$('.wrapper').append('<div class="'+side+'"><h2>'+subject+'</h2><p>'+copy+'</p></div>');
+					}
+					if(item_attachments && value.SUBJECT != "gchat" && author != 'none'){
+						item = wrapper.lastChild.getElementsByTagName("p")[0];
+						item.appendChild(item_attachments);
+					}
+				}
 			});
 		},
 		miscFunctions: function(){

@@ -273,33 +273,18 @@ input[type=range]::-ms-fill-upper {
   margin-bottom: 25px;
 }
 /* line 75, ../sass/style.scss */
-.wrapper > div ul {
-  margin-top: -15px;
-}
-/* line 77, ../sass/style.scss */
-.wrapper > div ul li {
-  float: left;
-  margin-right: 10px;
-  font-size: .7em;
-  color: rgba(0, 0, 0, 0.5);
-}
-/* line 83, ../sass/style.scss */
-.wrapper > div ul li:last-child {
-  margin-right: 0px;
-}
-/* line 87, ../sass/style.scss */
 .wrapper > div .attachments {
   float: left;
   margin-top: 15px;
 }
-/* line 91, ../sass/style.scss */
+/* line 79, ../sass/style.scss */
 .wrapper > div h1 {
   font-size: 1em;
   font-weight: bold;
   padding: 25px 0px 15px 0px;
   line-height: 1.2em;
 }
-/* line 97, ../sass/style.scss */
+/* line 85, ../sass/style.scss */
 .wrapper > div h2 {
   padding: 0px 2.5%;
   font-size: 1em;
@@ -307,11 +292,11 @@ input[type=range]::-ms-fill-upper {
   font-style: italic;
   margin-bottom: 10px;
 }
-/* line 104, ../sass/style.scss */
+/* line 92, ../sass/style.scss */
 .wrapper > div p:first-of-type {
   padding: 15px;
 }
-/* line 107, ../sass/style.scss */
+/* line 95, ../sass/style.scss */
 .wrapper > div p {
   font-size: .9em;
   line-height: 1.3em;
@@ -319,7 +304,16 @@ input[type=range]::-ms-fill-upper {
   color: white;
   position: relative;
 }
-/* line 114, ../sass/style.scss */
+/* line 101, ../sass/style.scss */
+.wrapper > div p ul {
+  margin-top: 15px;
+  margin-bottom: 5px;
+}
+/* line 105, ../sass/style.scss */
+.wrapper > div p ul li a {
+  color: grey;
+}
+/* line 111, ../sass/style.scss */
 .wrapper > div p:after {
   content: '';
   position: absolute;
@@ -335,41 +329,33 @@ input[type=range]::-ms-fill-upper {
   -webkit-transform: translate(0%, 100%);
   transform: translate(0%, 100%);
 }
-/* line 128, ../sass/style.scss */
+/* line 125, ../sass/style.scss */
 .wrapper > div.left h1 {
   border-top: 2px solid pink;
 }
-/* line 131, ../sass/style.scss */
-.wrapper > div.left ul {
-  float: left;
-}
-/* line 136, ../sass/style.scss */
+/* line 130, ../sass/style.scss */
 .wrapper > div.right h1, .wrapper > div.middle h1 {
   border-top: 2px solid #7bccf6;
 }
-/* line 139, ../sass/style.scss */
-.wrapper > div.right ul, .wrapper > div.middle ul {
-  float: right;
-}
-/* line 144, ../sass/style.scss */
+/* line 135, ../sass/style.scss */
 .wrapper > div.someone h1 {
   border-top: 2px solid grey;
 }
-/* line 148, ../sass/style.scss */
+/* line 139, ../sass/style.scss */
 .wrapper > div:last-child {
   padding-bottom: 0px;
 }
-/* line 151, ../sass/style.scss */
+/* line 142, ../sass/style.scss */
 .wrapper .left {
   margin-left: 10%;
   margin-right: 30%;
   clear: both;
 }
-/* line 155, ../sass/style.scss */
+/* line 146, ../sass/style.scss */
 .wrapper .left p {
   background-color: #c7b29a;
 }
-/* line 158, ../sass/style.scss */
+/* line 149, ../sass/style.scss */
 .wrapper .left p:after {
   border-top: 15px solid #c7b29a;
   border-left: 15px solid transparent;
@@ -377,31 +363,31 @@ input[type=range]::-ms-fill-upper {
   left: auto;
   right: 0px;
 }
-/* line 164, ../sass/style.scss */
+/* line 155, ../sass/style.scss */
 .wrapper .left h2 {
   color: #c7b29a;
 }
-/* line 168, ../sass/style.scss */
+/* line 159, ../sass/style.scss */
 .wrapper .right {
   float: right;
   margin-right: 10%;
   margin-left: 30%;
 }
-/* line 172, ../sass/style.scss */
+/* line 163, ../sass/style.scss */
 .wrapper .right p {
   background-color: #fd7cab;
   position: relative;
   z-index: 1;
 }
-/* line 177, ../sass/style.scss */
+/* line 168, ../sass/style.scss */
 .wrapper .right p:after {
   border-top: 15px solid #fd7cab;
 }
-/* line 180, ../sass/style.scss */
+/* line 171, ../sass/style.scss */
 .wrapper .right h2 {
   color: #fd7cab;
 }
-/* line 184, ../sass/style.scss */
+/* line 175, ../sass/style.scss */
 .wrapper .middle {
   float: right;
   width: 60%;
@@ -412,21 +398,21 @@ input[type=range]::-ms-fill-upper {
 }
 
 @media (max-width: 640px) {
-  /* line 194, ../sass/style.scss */
+  /* line 185, ../sass/style.scss */
   #header {
     height: 155px;
   }
 
-  /* line 198, ../sass/style.scss */
+  /* line 189, ../sass/style.scss */
   .wrapper .left, .wrapper .right, .wrapper .middle {
     width: 80%;
     margin-left: 10%;
   }
-  /* line 202, ../sass/style.scss */
+  /* line 193, ../sass/style.scss */
   .wrapper .middle {
     float: left;
   }
-  /* line 206, ../sass/style.scss */
+  /* line 197, ../sass/style.scss */
   .wrapper > div > div {
     padding-bottom: 50px;
   }
