@@ -49,31 +49,6 @@
 				item = '';
 				items = $('.wrapper').children('div');
 				$.each(items, function(){
-					var scrollTop     = $(window).scrollTop(),
-					    elementOffset = $(this).offset().top,
-					    distance      = (elementOffset - scrollTop);
-
-					if(scrollTop > $('.wrapper').height()-100){
-						console.log('click');
-				   		$('#backToTop').click();
-					}
-
-					 topLimit = (window.innerHeight/4)*2;
-					 if(distance < topLimit  ){
-					 	if(item != this){
-					 		item = this;
-					 		$(item).addClass('active');
-					 		itemIndex = $(this).index();
-					 		itemTime = moment(""+site.messages[itemIndex].DATE+" "+site.messages[itemIndex].TIME+"");
-
-					 		var months = [ "January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December" ];
-					 		var selectedMonthName = months[itemTime.month()];
-
-					 		$('#date').html(selectedMonthName +" "+ itemTime.date() +", "+ itemTime.year() +" // "+itemTime.hour() +":"+itemTime.minute());
-					 	}
-					 }else {
-					 	$(this).removeClass('active');
-					 }
 				})
 			};
 			loaded();
@@ -108,11 +83,6 @@
 			}
 			userTime();
 
-			$('#backToTop').on('click',function(){
-				displayMessages();
-			})
-			
-
 			function displayMessages(){
 
 				// just preparing some data
@@ -133,12 +103,12 @@
 				  var index = list.data('index') % arr.length || 0;
 				  
 				  // save next index - for next call
-				  list.data('index', index + 15);
+				  list.data('index', index + arr.length);
 				  
 				  // 1) get 20 elements from array - starting from index, using Array.slice()
 				  // 2) map them to array of li strings
 				  // 3) join the array into a single string and set it as a HTML content of list
-				  list.append($.map(arr.slice(index, index + 15), function(val) {
+				  $.each(arr.slice(index, index + arr.length), function(index, val) {
 					var item_date = moment(""+val.DATE+" "+val.TIME+"");
 					item_miliseconds = item_date.unix();
 
@@ -209,6 +179,7 @@
 							$('.wrapper>div').last().children('p').append('<br/><br/>'+val.COPY+'');
 						}else if(author != 'none'){
 				    		$('.wrapper').append('<div class="'+side+'"><h2>'+subject+'</h2><p>'+copy+'</p></div>');
+				    		$('.wrapper>div').last().children('p').linkify();
 						}
 						if(item_attachments && val.SUBJECT != "gchat" && author != 'none'){
 							item = wrapper.lastChild.getElementsByTagName("p")[0];
@@ -216,16 +187,40 @@
 						}
 					}
 
-				  })).linkify();
+				  });
 					site.paddingBottom();
+					classname = 'wrapper';
+					var $elements = $('.' + classname+'>div');
+
+					  $elements.each(function() {
+					    new Waypoint({
+					      element: this,
+					      handler: function(direction) {
+					        var previousWaypoint = this.previous()
+					        var nextWaypoint = this.next()
+					        $(this.element).addClass('active')
+
+						 		item = $(this.element);
+						 		itemIndex = $(this.element).index();
+						 		itemTime = moment(""+site.messages[itemIndex].DATE+" "+site.messages[itemIndex].TIME+"");
+
+						 		var months = [ "January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December" ];
+						 		var selectedMonthName = months[itemTime.month()];
+
+						 		$('#date').html(selectedMonthName +" "+ itemTime.date() +", "+ itemTime.year() +" // "+itemTime.hour() +":"+itemTime.minute());
+						 
+					        if (nextWaypoint) {
+					          $(nextWaypoint.element).removeClass('active')
+					        }
+					      },
+					      offset: '50%',
+					      group: classname
+					    })
+					  })
 				}
 			};
 
 			displayMessages();
-
-			// /////////// Message Pagination Loop ////////////////
-			// for (i = 0; i > page*pagelimit && i < page+1*page_limit; i++) { 
-			// }
 
 			////////////////////////////////////////////////////
 
