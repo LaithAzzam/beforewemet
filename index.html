@@ -63,22 +63,21 @@
 <body>
 
 
-
+<div id="controls">
+	<div id="date"></div>
+	<div id="backToTop"></div>
+</div>
 <!-- not needed? up to you: http://camendesign.com/code/developpeurs_sans_frontieres -->
 
 <div id="header">
-
-	<a href="/"><img id="logo" src="assets/img/logo.gif" alt="logo"/><h1>before we met</h1></a>
-
-	<div id="test"></div>
+	<h1>before <span>we met</span></h1>
 </div>
-
-<form id="timeline">
-	<div class="leftFill" ></div>
-	<input id="slider" type="range" min="0" max="10000" value="0">
-</form>
 	
 <div class="wrapper">
+</div>
+
+<div id="footer">
+
 </div>
 
 <!-- Grab Google CDN's jQuery. fall back to local if necessary -->
@@ -87,6 +86,9 @@
 
 <!-- this is where we put our custom functions -->
 <!-- don't forget to concatenate and minify if needed -->
+<script src="assets/js/libs/jquery.waypoints.min.js"></script>
+<script src="assets/js/libs/linkify.js"></script>
+<script src="assets/js/libs/moment.js"></script>
 <script src="assets/js/libs/rangetouch.js"></script>
 <script src="assets/js/libs/jquery-ui.js"></script>
 <script src="assets/js/libs/dragdealer.js"></script>
