@@ -44,11 +44,19 @@
 				}
 			}
 			function updateTime(){
+
+				
+				item = '';
 				items = $('.wrapper').children('div');
 				$.each(items, function(){
 					var scrollTop     = $(window).scrollTop(),
 					    elementOffset = $(this).offset().top,
 					    distance      = (elementOffset - scrollTop);
+
+					if(scrollTop > $('.wrapper').height()-100){
+						console.log('click');
+				   		$('#backToTop').click();
+					}
 
 					 topLimit = (window.innerHeight/4)*2;
 					 if(distance < topLimit  ){
@@ -71,14 +79,17 @@
 			loaded();
 		},
 		resize: function(){
+			
+
+			site.pixels = parseInt($('.wrapper').height())-site.paddingTop;
+			$('#slider').attr('max',site.pixels);
+		},
+		paddingBottom: function(){
 			paddingBottom = ( site.paddingTop-$('.wrapper>div').last().height() )/2;
 			if(paddingBottom <= 50){
 				paddingBottom = 100
 			}
 			$('.wrapper>div').last().css('padding-bottom', paddingBottom);
-
-			site.pixels = parseInt($('.wrapper').height())-site.paddingTop;
-			$('#slider').attr('max',site.pixels);
 		},
 		spreadsheet: function(){
 			$.getJSON("assets/js/messages.json", function(json) {
@@ -100,18 +111,21 @@
 			$('#backToTop').on('click',function(){
 				displayMessages();
 			})
+			
 
 			function displayMessages(){
+
 				// just preparing some data
 				var arr = site.messages;
 
 				// our variable holding starting index of this "page"
 				var index = 0;
 
-				// display our initial list
 				displayNext();
 
 				function displayNext() {
+
+				$('.wrapper>div').last().css('padding-bottom','inherit');
 				  // get the list element
 				  var list = $('.wrapper');
 				  
@@ -119,21 +133,95 @@
 				  var index = list.data('index') % arr.length || 0;
 				  
 				  // save next index - for next call
-				  list.data('index', index + 20);
+				  list.data('index', index + 15);
 				  
 				  // 1) get 20 elements from array - starting from index, using Array.slice()
 				  // 2) map them to array of li strings
 				  // 3) join the array into a single string and set it as a HTML content of list
-				  list.append($.map(arr.slice(index, index + 20), function(val) {
-				  	console.log();
-				    return '<li id=' + val.DATE + '>' + val.DATE + '</li>';
-				  }).join(''));
+				  list.append($.map(arr.slice(index, index + 15), function(val) {
+					var item_date = moment(""+val.DATE+" "+val.TIME+"");
+					item_miliseconds = item_date.unix();
+
+				    function author(){
+						// set author per item
+						if(val.AUTHOR.substring(0,3) == 'tal'){
+							author = val.AUTHOR.substring(0,3);
+							side = 'right';
+						}else if(val.AUTHOR.substring(0,4) == 'josh'){
+							author = val.AUTHOR.substring(0,4);
+							side = 'left'
+						}else{
+							author = 'none';
+							side = 'middle someone'
+						}
+					};
+					function subject(){
+						// use subject to determine if message is ghat or email
+						if(val.SUBJECT == "gchat"){
+							// if gchat, set subject to nothing to know it's gchat
+							subject = ''
+						}else{
+							subject = 'Subject: '+val.SUBJECT+'';
+						}
+					};
+					function attachments(){
+						if(val.ATTACHMENTS == ''){
+							item_attachments = false;
+						}else{
+							item_attachments_raw = JSON.stringify(val.ATTACHMENTS).split(/[\\]n/g), parts = [];
+
+							function makeUL(array) {
+							    // Create the list element:
+							    var list = document.createElement('ul');
+
+							    for(var i = 0; i < array.length; i++) {
+							        // Create the list item:
+							        var link = document.createElement('a');
+							        link.href = 'assets/attachments/'+array[i].replace(/\"/g, "");
+							        link.target = '_blank';
+							        var item = document.createElement('li');
+
+							        // Set its contents:
+							        item.appendChild(link).appendChild(document.createTextNode(array[i].replace(/\"/g, "")));
+
+							        // Add it to the list:
+							        list.appendChild(item);
+							    }
+							    // Finally, return the constructed list:
+							    return list;
+							}
+							item_attachments = makeUL(item_attachments_raw);
+						}
+					}
+					function copy(){
+						copyRaw = JSON.stringify(val.COPY);
+						copy = copyRaw.replace(/[\\]n/g, '<br/>').replace(/\"/g, "");
+					};
+
+					author();
+					subject();
+					copy();
+					attachments();
+
+					if(current_miliseconds >= item_miliseconds ){
+						last = $('.wrapper>div').last();
+						if(last.attr('class')==side){
+							$('.wrapper>div').last().children('p').append('<br/><br/>'+val.COPY+'');
+						}else if(author != 'none'){
+				    		$('.wrapper').append('<div class="'+side+'"><h2>'+subject+'</h2><p>'+copy+'</p></div>');
+						}
+						if(item_attachments && val.SUBJECT != "gchat" && author != 'none'){
+							item = wrapper.lastChild.getElementsByTagName("p")[0];
+							item.appendChild(item_attachments);
+						}
+					}
+
+				  })).linkify();
+					site.paddingBottom();
 				}
 			};
 
 			displayMessages();
-			page = 0;
-			page_limit = 10;
 
 			// /////////// Message Pagination Loop ////////////////
 			// for (i = 0; i > page*pagelimit && i < page+1*page_limit; i++) { 
