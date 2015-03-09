@@ -1,0 +1,13 @@
+#clock-container { 
+  display: inline-block;
+  position: relative;
+  width: 35px;
+  vertical-align: middle;
+  overflow: hidden;
+} 
+#face { stroke-width: 2px; stroke: $lbrown; fill: $lpink; }
+#hour, #min, #sec { 
+  stroke-width: 0px;
+  fill: $dbrown;
+  stroke: $dbrown;
+}
