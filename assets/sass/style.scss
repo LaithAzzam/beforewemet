@@ -23,8 +23,11 @@
     transition-delay:         $delay;
 }
 
-.wrapper, #about, #header {
+.wrap {
 	@include transition(all, 250ms, ease-out);
+}
+.hide {
+	opacity: .5;
 }
 $font: 'Open Sans', sans-serif;
 $dpink: #fd7cab;
@@ -35,7 +38,6 @@ $dblue: #689cc3;
 
 @import "compass/reset";
 @import "scrollbar.scss";
-@import "clock.scss";
 @import "mixins.scss";
 
 #header {
@@ -75,8 +77,8 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', end
 
 footer {
 	width: 100%;
-	height: 10px;
-	background-color: black;
+	height: 5%;
+	background-color: $lbrown;
 }
 #controls {
 	position: fixed;
@@ -102,18 +104,24 @@ footer {
 #time {
 	background-color: $lbrown;
 }
+#backToTop {
+	@include transform(rotate(180deg));
+}
 #backToTop, #aboutBtn {
 	height: 35px; width: 35px;
-	background-color: $lpink;
+	background-color: transparent;
+	border: 1px solid $dpink;
 	float: right;
 	opacity: .4;
 	border-radius: 50%;
 	@include transition(all, 250ms, ease-out);
 	cursor: pointer;
 	cursor: hand;
+	box-sizing: border-box;
 	img {
 		width: 70%;
-		margin: 10% 15%;
+		margin: 14% 15%;
+		fill: $dpink;
 	}
 }
 #aboutBtn {
@@ -124,7 +132,7 @@ footer {
 }
 #about {
 	position: fixed;
-	top: 50%; right: -400px;
+	top: 50%; left: -425px;
 	width: 400px; height: 50%;
 	z-index: 10;
 	@include transform(translate(0%,-50%));
@@ -134,7 +142,9 @@ footer {
   	align-items: center;
   	justify-content: center;
 	display: flex;
-	box-shadow: 0px 0px 5px rgba(0,0,0,.1);
+	box-shadow: 0px 0px 2px rgba(0,0,0,.05);
+	padding-right: 25px;
+	border: 1px solid $dpink;
   	div {
   		width: 80%;
   		max-width: 500px;
@@ -148,6 +158,7 @@ footer {
   			width: 100%;
   			color: black;
   			font-family: $font;
+  			line-height: 1.3em;
   		}
   		p:last-child {
   			margin-top: 15px;
@@ -165,7 +176,7 @@ footer {
   	}
 }
 #about.open {
-	right: 0%;
+	left: 0%;
 }
 .wrapper { 
 	width: 100%; 
@@ -218,17 +229,22 @@ footer {
 				}
 			}
 		}
-		p:after {
+	}
+	.gchat {
+		width: 30%;
+		p:last-of-type:after {
 			content: '';
 			position: absolute;
 			bottom: 15px;
-			left: 0px;
+			right: 0px;
 			z-index: 0;
 			width: 0;
 			height: 0;
-			border-right: 15px solid transparent;
 			@include transform(translate(0%,100%));
 		}
+	}
+	.left.gchat {
+		margin-left: 20%;
 	}
 
 	>div.left{
@@ -256,7 +272,21 @@ footer {
 	>div:last-child {
 		padding-bottom:0px;
 	}
-	.left.active {
+	.left.np-previous {
+		opacity: .6;
+		p {
+			background-color: $dbrown;
+			color: white;
+			border: none;
+		}
+		p:after {
+			opacity: 1;
+			bottom: 0px;
+			opacity: 1;
+			@include transition-delay(250ms);
+		}
+	}
+	.left.np-current {
 		opacity: 1;
 		p {
 			background-color: $dbrown;
@@ -270,7 +300,21 @@ footer {
 			@include transition-delay(250ms);
 		}
 	}
-	.right.active {
+	.right.np-previous {
+		opacity: .6;
+		p {
+			background-color: $dpink;
+			color: white;
+			border: none;
+		}
+		p:after {
+			opacity: 1;
+			bottom: 0px;
+			opacity: 1;
+			@include transition-delay(250ms);
+		}
+	}
+	.right.np-current {
 		opacity: 1;
 		p {
 			background-color: $dpink;
@@ -298,16 +342,15 @@ footer {
 		clear: both;
 		opacity: .3;
 		p {
-			background-color: transparent;
-			border: 1px solid $dbrown;
-			box-sizing: border-box;
-			color: $dbrown;
+			background-color: $dbrown;
+			color: white;
+			border: none;
 		}
 		p:after {
 			border-top: 15px solid $dbrown;
-			border-left: 15px solid transparent;
-			border-right: none;
-			left: auto; right: 0px;
+			border-right: 15px solid transparent;
+			border-left: none;
+			left: 0px; right: auto;
 			opacity: 0;
 		}
 		h2 {
@@ -319,16 +362,18 @@ footer {
 		margin-left: 50%;
 		opacity: .3;
 		p {
-			background-color: transparent;
-			border: 1px solid $dpink;
+			background-color: $dpink;
 			box-sizing: border-box;
-			color: $dpink;
+			color: white;
 			position: relative;
 			z-index: 1;
 		}
 		p:after{
 			border-top: 15px solid $dpink;
 			opacity: 0;
+
+			border-left: 15px solid transparent;
+			border-right: none;
 		}
 		h2 {
 			color: $dpink;
@@ -361,6 +406,13 @@ footer {
 			>div {
 				padding-bottom: 50px;
 			}
+		}
+	}
+	#about {
+		width: 100%;
+		right: -120%;
+		div {
+			width: 70%;
 		}
 	}
 }
