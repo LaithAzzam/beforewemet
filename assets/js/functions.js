@@ -117,7 +117,7 @@
 					amount++;
 					parseMessage();
 					last = $('.message').last();
-					if(last.hasClass(''+side+'')){
+					if(last.hasClass(''+side+'') && type == 'gmail'){
 						$('.message').last().append('<p>'+val.COPY+'</p>');
 					}else if(author != 'none'){
 			    		$('.wrapper').append('<div class="'+side+' '+type+' message"><h2>'+subject+'</h2><p>'+copy+'</p></div>');
