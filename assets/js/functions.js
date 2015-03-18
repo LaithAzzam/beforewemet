@@ -102,7 +102,7 @@
 			  // 1) get 20 elements from array - starting from index, using Array.slice()
 			  // 2) map them to array of li strings
 			  // 3) join the array into a single string and set it as a HTML content of list
-			console.log('index in: '+ index);
+				
 			  $.each(messages.slice(index, index + 10), function(index, val) {
 
 				var item_date = moment(""+val.DATE+" "+val.TIME+"");
@@ -124,9 +124,7 @@
 						item.appendChild(item_attachments);
 					}
 				}
-				
 				list.data('index', index + amount);
-				console.log('index out: '+ index);
 				function parseMessage(){
 					author();
 					subject();
