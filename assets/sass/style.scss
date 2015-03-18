@@ -29,7 +29,7 @@
 .hide {
 	opacity: .5;
 }
-$font: 'Open Sans', sans-serif;
+$font: helvetica;
 $dpink: #fd7cab;
 $lpink: #fec0d7;
 $dbrown: #c7b29a;
@@ -40,8 +40,12 @@ $dblue: #689cc3;
 @import "scrollbar.scss";
 @import "mixins.scss";
 
+
+.animate{
+	// @include transition(all, 550ms, ease-out);
+}
 #header {
-	height: 100%;
+	height: 75%;
 	width: 100%;
 	z-index: 10;
 	pointer-events: none;
@@ -65,10 +69,23 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', end
 		display: block;
 		font-size: 15vw;
 		width: auto;
-		@include transform(skewY(-5deg));
+		height: 300; width: 500px;
+		max-width: 90%;
+		background: url(../img/beforewemet.svg) no-repeat center center; 
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+  text-index: -9999em;
 		span {
 			color: $dpink;
 		}
+	}
+	.docked {
+		position: fixed;
+		top: 15px;
+		height: 100px;
+		width: 200px;
 	}
 	img {
 	}
@@ -88,21 +105,32 @@ footer {
 	opacity: 1;
 	@include transition(all, 250ms, ease-out);
 	width: 100%;
+	#logo {
+		width: 100px;
+		float: left;
+	}
+}
+.cHidden {
+	opacity: 1;
+	@include transition(all, 250ms, ease-out);
+}
+.cHidden.show {
 }
 #date {
 	margin-left: 15px;
 }
 #date, #time {
-	padding: 0px 10px 0px 10px;
-	line-height: 35px;
+	padding: 0px 10px;
+	line-height: 36px;
+	height: 32px;
 	font-family: $font;
 }
 #date, #backToTop, #time {
 	float: left;
-	background-color: $lpink;
+	background-color: $lbrown;
 }
 #time {
-	background-color: $lbrown;
+	background-color: $lpink;
 }
 #backToTop {
 	@include transform(rotate(180deg));
@@ -132,8 +160,9 @@ footer {
 }
 #about {
 	position: fixed;
-	top: 50%; left: -425px;
-	width: 400px; height: 50%;
+	top: 50%; left: -430px;
+	width: 400px; height: auto;
+	padding: 25px 0px;
 	z-index: 10;
 	@include transform(translate(0%,-50%));
 	@include transition(all, 350ms, ease-out);
@@ -148,39 +177,58 @@ footer {
   	div {
   		width: 80%;
   		max-width: 500px;
+  		img {
+  			width: 50%; margin: auto;
+  			display: block;
+  		}
   		h3 {
   			color: $dpink;
   			margin-bottom: 15px;
   			font-family: $font;
   			font-size: 1.3em;
+  			img {
+  				display: none;
+  			}
+  		}
+  		ul {
+  			text-align: left;
+  			li {
+  				width: 20px;
+  				height: 40px;
+  				display: inline-block;
+  				padding: 0px;
+  				margin: 0px;
+  				img{ width: 100%;}
+  			}
   		}
   		p {
   			width: 100%;
-  			color: black;
+  			color: grey;
   			font-family: $font;
   			line-height: 1.3em;
+  			font-size: 12px;
+  			margin-bottom: 10px;
   		}
   		p:last-child {
   			margin-top: 15px;
-  			font-size: .8em;
+  			font-size: 12px;
   			color: grey;
-  			a {
-  				color: $lpink;
-  				text-decoration: none;
-  				@include transition(all, 250ms, ease-out);
-  			}
-  			a:hover {
-  				color: grey;
-  			}
   		}
+  		a {
+			color: $lpink;
+			text-decoration: none;
+			@include transition(all, 250ms, ease-out);
+		}
+		a:hover {
+			color: grey;
+		}
   	}
 }
 #about.open {
 	left: 0%;
 }
 .wrapper { 
-	width: 100%; 
-	overflow: auto;
+	width: 100%;
 	>div {
 		width: 100%;
 		font-family: $font;
@@ -243,7 +291,7 @@ footer {
 			@include transform(translate(0%,100%));
 		}
 	}
-	.left.gchat {
+	.gchat.left {
 		margin-left: 20%;
 	}
 
@@ -288,6 +336,7 @@ footer {
 	}
 	.left.np-current {
 		opacity: 1;
+		@include transform(scale(1.03));
 		p {
 			background-color: $dbrown;
 			color: white;
@@ -316,6 +365,7 @@ footer {
 	}
 	.right.np-current {
 		opacity: 1;
+		@include transform(scale(1.02));
 		p {
 			background-color: $dpink;
 			color: white;
@@ -329,7 +379,7 @@ footer {
 		}
 	}
 	.left, .right {
-			@include transition(all, 750ms, ease-out);
+			// @include transition(all, 450ms, ease-out);
 		p, p:after {
 			@include transition(all, 150ms, ease-out);
 		}
@@ -389,11 +439,11 @@ footer {
 }
 @media (max-width: 640px){
 	#header {
-		height: 80%;
+		height: 75%;
 		h1 {
 			font-size: 18vw;
 		}
-	}
+	} 
 	.wrapper {
 		.left, .right, .middle {
 			width: 80%; 
@@ -407,10 +457,13 @@ footer {
 				padding-bottom: 50px;
 			}
 		}
+		.gchat.left {
+			margin-left: 10%;
+		}
 	}
 	#about {
 		width: 100%;
-		right: -120%;
+		left: -120%;
 		div {
 			width: 70%;
 		}

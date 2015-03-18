@@ -33,6 +33,12 @@
 				function Scroll() {
 					updateTime();
 					scrollValue = $(window).scrollTop();
+					if(scrollValue >= window.innerHeight/2){
+						$('#aboutImg').css('display','block');
+					}
+					else {
+						$('#aboutImg').css('display','hidden');
+					}
 				}
 			}
 			function updateTime(){
@@ -58,7 +64,7 @@
 		},
 
 		userTime: function(){
-			var newDate = moment().year(2010).month(3).date(25);
+			var newDate = moment().year(2010).month(5);
 			return newDate.unix();
 		},
 
@@ -72,27 +78,19 @@
 
 			displayNext();
 
-			var opts = {
-			    offset: '110%',
-			    context: '#central-pane .viewport-content'
-			};
+			$('#backToTop').on('click',function(){
+				displayNext();
+			});
 
-			var waypoint = new Waypoint({
-			element: $('.wrap')[0],
-			handler: function(direction) {
-			if(direction == 'down'){
-				console.log('okay');
-			}
-			},
-    		triggerOnce: true,
-			offset: 'bottom-in-view'
-			})
-
-			$("#aboutBtn").click(function() {
-				// displayNext();
+			$("#facebook").click(function() {
+				FB.ui({
+				  method: 'share',
+				  href: 'http://beforewemet.com/',
+				}, function(response){});
 			});
 
 			function displayNext() {
+				Waypoint.destroyAll()
 			  $('.message').last().css('padding-bottom','0px');
 			  // get the list element
 			  var amount = 0;
@@ -104,11 +102,8 @@
 			  // 1) get 20 elements from array - starting from index, using Array.slice()
 			  // 2) map them to array of li strings
 			  // 3) join the array into a single string and set it as a HTML content of list
-			  $.each(messages.slice(index, index + messages.length), function(index, val) {
-
-				if(index == 1){
-					$('#header').css('height','75%');
-				}
+			console.log('index in: '+ index);
+			  $.each(messages.slice(index, index + 10), function(index, val) {
 
 				var item_date = moment(""+val.DATE+" "+val.TIME+"");
 				item_miliseconds = item_date.unix();
@@ -117,9 +112,10 @@
 					amount++;
 					parseMessage();
 					last = $('.message').last();
-					if(last.hasClass(''+side+'') && type == 'gmail'){
-						$('.message').last().append('<p>'+val.COPY+'</p>');
-					}else if(author != 'none'){
+					// if(last.hasClass(''+side+'') && type == 'gchat'){
+					// 	$('.message').last().append('<p>'+val.COPY+'</p>');
+					// }
+					if(author != 'none'){
 			    		$('.wrapper').append('<div class="'+side+' '+type+' message"><h2>'+subject+'</h2><p>'+copy+'</p></div>');
 			    		$('.message').last().children('p').linkify();
 					}
@@ -128,14 +124,16 @@
 						item.appendChild(item_attachments);
 					}
 				}
-
+				
+				list.data('index', index + amount);
+				console.log('index out: '+ index);
 				function parseMessage(){
 					author();
 					subject();
 					copy();
 					attachments();
 				};
-			  function author(){
+			  	function author(){
 					// set author per item
 					if(val.AUTHOR.substring(0,3) == 'tal'){
 						author = val.AUTHOR.substring(0,3);
@@ -189,14 +187,14 @@
 					}
 				}
 				function copy(){
-					copyRaw = JSON.stringify(val.COPY);
-					copy = copyRaw.replace(/[\\]n/g, '<br/>').replace(/\"/g, "");
+					copyRaw = JSON.stringify(val.COPY).replace(/[\\]n/g, '<br/>').replace(/\\/g, "");
+					copy = copyRaw.substring(1, copyRaw.length-1);
 				};
 				
 			});
-			console.log('amount: '+amount);
-			list.data('index', index + amount);
-			site.postBuild();
+				if($(".wrapper").children('div').length){
+					site.postBuild();
+				}
 			}
 		},
 		postBuild: function(){
@@ -207,61 +205,65 @@
 			    psArray.push(ps[i]);
 			}
 			site.paddingBottom();
-				$.each(['message'], function(i, classname) {
-				  var $elements = $('.' + classname)
-				  $elements.each(function() {
-				    new Waypoint({
-				      element: this,
-				      handler: function(direction) {
-				        var previousWaypoint = this.previous()
-				        var nextWaypoint = this.next()
+			$.each(['message'], function(i, classname) {
+			  var $elements = $('.' + classname)
+			  $elements.each(function() {
+			    new Waypoint({
+			      element: this,
+			      handler: function(direction) {
+			        var previousWaypoint = this.previous()
+			        var nextWaypoint = this.next()
 
-				        $elements.removeClass('np-previous np-current np-next')
-				        $(this.element).addClass('np-current')
-				        	item = $(this.element);
-				        	p = item.children('p').last()[0];
-				        	console.log(jQuery.inArray(p, psArray));
-					 		itemIndex = jQuery.inArray(p, psArray);
-					 		itemTime = moment(""+site.messages[itemIndex].DATE+" "+site.messages[itemIndex].TIME+"");
+			        $elements.removeClass('np-previous np-current np-next')
+			        $(this.element).addClass('np-current')
+			        	item = $(this.element);
+			        	p = item.children('p').last()[0];
+				 		itemIndex = jQuery.inArray(p, psArray);
+				 		itemTime = moment(""+site.messages[itemIndex].DATE+" "+site.messages[itemIndex].TIME+"");
 
-					 		var months = [ "January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December" ];
-					 		var selectedMonthName = months[itemTime.month()];
+				 		var months = [ "January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December" ];
+				 		var selectedMonthName = months[itemTime.month()];
 
-					 		$('#date').html(selectedMonthName +" "+ itemTime.date() +", "+ itemTime.year() +"");
-					 		if(itemTime.hour() >= 12){
-					 			period = 'pm';
-					 		}else {
-					 			period = 'am';
-					 		}
+				 		$('#date').html(selectedMonthName +" "+ itemTime.date() +", "+ itemTime.year() +"");
+				 		if(itemTime.hour() >= 12){
+				 			period = 'pm';
+				 		}else {
+				 			period = 'am';
+				 		}
 
-					 		$('#time').html(((itemTime.hour() + 11) % 12 + 1) +":"+('0' + itemTime.minutes()).slice(-2) +" "+period+"");
-				        if (previousWaypoint) {
-				          $(previousWaypoint.element).addClass('np-previous')
-				        }
-				        if (nextWaypoint) {
-				          $(nextWaypoint.element).addClass('np-next')
-				        }
-				      },
-				      offset: '50%',
-				      group: classname
-				    })
-				  })
-				})
-
+				 		$('#time').html(((itemTime.hour() + 11) % 12 + 1) +":"+('0' + itemTime.minutes()).slice(-2) +" "+period+"");
+			        if (previousWaypoint) {
+			          $(previousWaypoint.element).addClass('np-previous')
+			        }
+			        if (nextWaypoint) {
+			          $(nextWaypoint.element).addClass('np-next')
+			        }
+			      },
+			      offset: '50%',
+			      group: classname
+			    })
+			  })
+			});
+				// $('#header').css('height','75%');
+				// var el = document.getElementById('header');
+				// el.addEventListener("transitionend", function(){
+				// 	// $(el).removeClass('animate');
+				// }, true);
 		},
 		miscFunctions: function(){
-			$("#backToTop").click(function() {
-				$('html, body').css('overflow','hidden');
-				var scrollTop = $(document).scrollTop();
-				speed = (scrollTop-$(document).height())/2;
-				if(speed < 3000 || speed > 3000){
-					speed = 3000;
-				}
-				$("html, body").animate({ scrollTop: $(document).height() }, speed, function(){
-					$('html, body').css('overflow','auto');
-				});
-			  return false;
-			});
+			// $("#backToTop").click(function() {
+			// 	$('html, body').stop();
+			// 	$('html, body').css('overflow','hidden');
+			// 	var scrollTop = $(document).scrollTop();
+			// 	speed = (scrollTop-$(document).height())/2;
+			// 	if(speed < 3000 || speed > 3000){
+			// 		speed = 3000;
+			// 	}
+			// 	$("html, body").animate({ scrollTop: $(document).height() }, speed, function(){
+			// 		$('html, body').css('overflow','auto');
+			// 	});
+			//   return false;
+			// });
 			$("#aboutBtn").click(function() {
 				if($('#about').hasClass('open')){
 					about.closeAbout();
@@ -290,7 +292,9 @@
 
 
 	$(document).ready(function (){
-		site.init();
+		setTimeout(function(){
+			site.init();
+		}, 200);
 	});
 	
 	$(window).load(function() {
