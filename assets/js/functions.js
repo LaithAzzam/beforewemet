@@ -208,7 +208,6 @@
 		}
 		},
 		postBuild: function(){
-  			document.body.scrollTop = document.documentElement.scrollTop = 0;
 			ps = $('.message').children('p');
         	psArray = [];
         	for (i = 0; i < ps.length; i++) { 
@@ -309,7 +308,6 @@ $(document).ready(function (){
 });
 
 $( window ).resize(function() {
-  document.body.scrollTop = document.documentElement.scrollTop = 0;
 });
 
 })(window.jQuery);
