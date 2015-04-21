@@ -24,7 +24,8 @@
 }
 
 html, body {
-	overflow: hidden;
+	overflow-x: hidden;
+	overflow-y: hidden;
 }
 
 .wrap {
@@ -531,6 +532,11 @@ display: -webkit-flex;
 		left: -120%;
 		div {
 			width: 70%;
+		}
+	}
+	footer {
+		iframe {
+			width: 100%;
 		}
 	}
 }

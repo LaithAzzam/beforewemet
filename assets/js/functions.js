@@ -256,7 +256,7 @@
 			  })
 			});
   			document.body.scrollTop = document.documentElement.scrollTop = 0;
-			$('html,body').css('overflow','auto');
+			$('html,body').css('overflow-y','auto');
 			$('#header').css('height','75%');
 			$('footer').css('height','auto');
 			$('.loading').animate({opacity: 0});
